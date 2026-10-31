@@ -3,25 +3,11 @@
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {
-  ArrowRight,
-  BookOpen,
-  Eye,
-  EyeOff,
-  LibraryBig,
-  Sparkles,
-} from "lucide-react";
+import { ArrowRight, BookOpen, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -30,12 +16,14 @@ export default function RegisterPage() {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [image, setImage] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+
+  const isDisabled = isLoading || isGoogleLoading;
 
   const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -50,15 +38,19 @@ export default function RegisterPage() {
       return;
     }
 
+    if (image.trim()) {
+      try {
+        new URL(image.trim());
+      } catch {
+        toast.error("Please enter a valid profile image URL.");
+        return;
+      }
+    }
+
     if (!/^(?=.*[a-z])(?=.*[A-Z]).{6,}$/.test(password)) {
       toast.error(
         "Password must contain uppercase, lowercase and at least 6 characters.",
       );
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      toast.error("Passwords do not match.");
       return;
     }
 
@@ -69,6 +61,7 @@ export default function RegisterPage() {
         name: name.trim(),
         email: email.trim(),
         password,
+        image: image.trim() || undefined,
       });
 
       if (result.error) {
@@ -89,234 +82,201 @@ export default function RegisterPage() {
     }
   };
 
+  const handleGoogleRegister = async () => {
+    try {
+      setIsGoogleLoading(true);
+
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      });
+    } catch {
+      toast.error("Google registration failed. Please try again.");
+      setIsGoogleLoading(false);
+    }
+  };
+
   return (
-    <main className="flex min-h-screen items-center justify-center overflow-hidden bg-[#FAF9FC] px-4 py-10">
-      <div className="grid w-full max-w-6xl overflow-hidden rounded-3xl border border-[#EAE7F2] bg-white shadow-[0_20px_70px_rgba(49,43,91,0.08)] lg:grid-cols-2">
-        {/* Left side - Welcome section */}
-        <section className="relative hidden flex-col justify-between overflow-hidden bg-[#29264F] p-12 text-white lg:flex">
-          <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-[#A99AE8]/20 blur-3xl" />
-          <div className="absolute -bottom-28 -left-20 h-80 w-80 rounded-full bg-[#D9C9F5]/15 blur-3xl" />
+    <main className="flex min-h-screen items-center justify-center bg-[#FAF9FC] px-4 py-10">
+      <div className="w-full max-w-md rounded-2xl border border-[#EAE7F2] bg-white p-6 shadow-sm sm:p-9">
+        <Link
+          href="/"
+          className="mb-8 inline-flex items-center gap-2 text-lg font-bold text-[#29264F]"
+        >
+          <BookOpen className="size-6 text-[#62549A]" />
+          BookNook
+        </Link>
 
-          <Link href="/" className="relative z-10 flex items-center gap-3">
-            <div className="flex size-11 items-center justify-center rounded-xl bg-white/15">
-              <BookOpen className="size-6" />
-            </div>
-            <span className="text-2xl font-bold tracking-tight">BookNook</span>
-          </Link>
+        <div className="mb-7">
+          <p className="mb-2 text-sm font-medium text-[#7667AA]">GET STARTED</p>
 
-          <div className="relative z-10 my-16">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm text-[#E5DDFB]">
-              <Sparkles className="size-4" />A little space for big stories
-            </div>
+          <h1 className="text-2xl font-bold tracking-tight text-[#29264F] sm:text-3xl">
+            Create your account
+          </h1>
 
-            <h1 className="max-w-md text-4xl leading-tight font-bold tracking-tight xl:text-5xl">
-              Every great story begins with a new chapter.
-            </h1>
-
-            <p className="mt-6 max-w-md text-base leading-7 text-[#D6D1E9]">
-              Discover wonderful books, explore new ideas and make reading a
-              part of your everyday life.
-            </p>
-
-            <div className="mt-10 flex items-center gap-4">
-              <div className="flex -space-x-3">
-                <div className="flex size-10 items-center justify-center rounded-full border-2 border-[#29264F] bg-[#DCCDF7] text-sm font-semibold text-[#29264F]">
-                  B
-                </div>
-                <div className="flex size-10 items-center justify-center rounded-full border-2 border-[#29264F] bg-[#F2D9D0] text-sm font-semibold text-[#29264F]">
-                  N
-                </div>
-                <div className="flex size-10 items-center justify-center rounded-full border-2 border-[#29264F] bg-[#D5E6DE] text-sm font-semibold text-[#29264F]">
-                  K
-                </div>
-              </div>
-              <p className="text-sm text-[#D6D1E9]">
-                Your next favorite book is waiting.
-              </p>
-            </div>
-          </div>
-
-          <p className="relative z-10 text-sm text-[#BDB6D8]">
-            © 2026 BookNook. Made for book lovers.
+          <p className="mt-2 text-sm text-[#77758A]">
+            Join BookNook and discover a world of stories.
           </p>
-        </section>
+        </div>
 
-        {/* Right side - Registration form */}
-        <section className="flex items-center justify-center px-5 py-10 sm:px-10 lg:px-12">
-          <div className="w-full max-w-md">
-            <Link
-              href="/"
-              className="mb-9 inline-flex items-center gap-2 text-xl font-bold text-[#29264F] lg:hidden"
-            >
-              <BookOpen className="size-6" />
-              BookNook
-            </Link>
+        <form onSubmit={handleRegister} className="space-y-5">
+          <div className="space-y-2">
+            <Label htmlFor="name">Full Name</Label>
+            <Input
+              id="name"
+              type="text"
+              placeholder="Enter your full name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              autoComplete="name"
+              required
+              disabled={isDisabled}
+              className="h-11 rounded-lg border-[#E7E3F0] bg-white px-3"
+            />
+          </div>
 
-            <div className="mb-8">
-              <div className="mb-5 flex size-12 items-center justify-center rounded-2xl bg-[#F0ECFA] text-[#62549A]">
-                <LibraryBig className="size-6" />
-              </div>
+          <div className="space-y-2">
+            <Label htmlFor="email">Email Address</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              autoComplete="email"
+              required
+              disabled={isDisabled}
+              className="h-11 rounded-lg border-[#E7E3F0] bg-white px-3"
+            />
+          </div>
 
-              <p className="mb-2 text-sm font-semibold tracking-wide text-[#7667AA]">
-                START YOUR READING JOURNEY
-              </p>
+          <div className="space-y-2">
+            <Label htmlFor="image">Profile Image URL (Optional)</Label>
+            <Input
+              id="image"
+              type="url"
+              placeholder="https://example.com/profile.jpg"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
+              disabled={isDisabled}
+              className="h-11 rounded-lg border-[#E7E3F0] bg-white px-3"
+            />
+            <p className="text-xs text-[#858198]">
+              Add a link to your profile picture.
+            </p>
+          </div>
 
-              <h2 className="text-3xl font-bold tracking-tight text-[#29264F]">
-                Create your account
-              </h2>
+          <div className="space-y-2">
+            <Label htmlFor="password">Password</Label>
 
-              <p className="mt-2 text-sm leading-6 text-[#77758A]">
-                Join BookNook and discover a world of stories.
-              </p>
+            <div className="relative">
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Create a password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="new-password"
+                required
+                disabled={isDisabled}
+                className="h-11 rounded-lg border-[#E7E3F0] bg-white px-3 pr-11"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#858198] hover:text-[#62549A]"
+              >
+                {showPassword ? (
+                  <EyeOff className="size-4" />
+                ) : (
+                  <Eye className="size-4" />
+                )}
+              </button>
             </div>
 
-            <Card className="border-0 bg-transparent p-0 shadow-none">
-              <CardHeader className="sr-only">
-                <CardTitle>Create account</CardTitle>
-                <CardDescription>
-                  Register for your BookNook account.
-                </CardDescription>
-              </CardHeader>
-
-              <CardContent className="p-0">
-                <form onSubmit={handleRegister} className="space-y-5">
-                  <div className="space-y-2">
-                    <Label htmlFor="name" className="text-[#393650]">
-                      Full Name
-                    </Label>
-                    <Input
-                      id="name"
-                      type="text"
-                      placeholder="Enter your full name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      autoComplete="name"
-                      required
-                      disabled={isLoading}
-                      className="h-12 rounded-xl border-[#E7E3F0] bg-[#FCFBFE] px-4 focus-visible:border-[#8876C5] focus-visible:ring-[#8876C5]/20"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="email" className="text-[#393650]">
-                      Email Address
-                    </Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="you@example.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      autoComplete="email"
-                      required
-                      disabled={isLoading}
-                      className="h-12 rounded-xl border-[#E7E3F0] bg-[#FCFBFE] px-4 focus-visible:border-[#8876C5] focus-visible:ring-[#8876C5]/20"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="password" className="text-[#393650]">
-                      Password
-                    </Label>
-                    <div className="relative">
-                      <Input
-                        id="password"
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Create a strong password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        autoComplete="new-password"
-                        required
-                        disabled={isLoading}
-                        className="h-12 rounded-xl border-[#E7E3F0] bg-[#FCFBFE] px-4 pr-12 focus-visible:border-[#8876C5] focus-visible:ring-[#8876C5]/20"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        aria-label={
-                          showPassword ? "Hide password" : "Show password"
-                        }
-                        className="absolute top-1/2 right-4 -translate-y-1/2 text-[#858198] transition hover:text-[#62549A]"
-                      >
-                        {showPassword ? (
-                          <EyeOff className="size-5" />
-                        ) : (
-                          <Eye className="size-5" />
-                        )}
-                      </button>
-                    </div>
-                    <p className="text-xs text-[#858198]">
-                      At least 6 characters, including uppercase and lowercase
-                      letters.
-                    </p>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="confirmPassword" className="text-[#393650]">
-                      Confirm Password
-                    </Label>
-                    <div className="relative">
-                      <Input
-                        id="confirmPassword"
-                        type={showConfirmPassword ? "text" : "password"}
-                        placeholder="Enter your password again"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        autoComplete="new-password"
-                        required
-                        disabled={isLoading}
-                        className="h-12 rounded-xl border-[#E7E3F0] bg-[#FCFBFE] px-4 pr-12 focus-visible:border-[#8876C5] focus-visible:ring-[#8876C5]/20"
-                      />
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setShowConfirmPassword(!showConfirmPassword)
-                        }
-                        aria-label={
-                          showConfirmPassword
-                            ? "Hide confirm password"
-                            : "Show confirm password"
-                        }
-                        className="absolute top-1/2 right-4 -translate-y-1/2 text-[#858198] transition hover:text-[#62549A]"
-                      >
-                        {showConfirmPassword ? (
-                          <EyeOff className="size-5" />
-                        ) : (
-                          <Eye className="size-5" />
-                        )}
-                      </button>
-                    </div>
-                  </div>
-
-                  <Button
-                    type="submit"
-                    disabled={isLoading}
-                    className="h-12 w-full rounded-xl bg-[#62549A] text-base font-semibold text-white shadow-md shadow-[#62549A]/15 transition hover:bg-[#514481]"
-                  >
-                    {isLoading ? (
-                      "Creating account..."
-                    ) : (
-                      <>
-                        Create Account
-                        <ArrowRight className="ml-2 size-4" />
-                      </>
-                    )}
-                  </Button>
-                </form>
-
-                <p className="mt-7 text-center text-sm text-[#77758A]">
-                  Already have an account?{" "}
-                  <Link
-                    href="/login"
-                    className="font-semibold text-[#62549A] transition hover:text-[#43366F] hover:underline"
-                  >
-                    Sign in
-                  </Link>
-                </p>
-              </CardContent>
-            </Card>
+            <p className="text-xs text-[#858198]">
+              Minimum 6 characters with uppercase and lowercase letters.
+            </p>
           </div>
-        </section>
+
+          <Button
+            type="submit"
+            disabled={isDisabled}
+            className="h-11 w-full rounded-lg bg-[#62549A] font-semibold text-white hover:bg-[#514481]"
+          >
+            {isLoading ? (
+              "Creating account..."
+            ) : (
+              <>
+                Create Account
+                <ArrowRight className="ml-2 size-4" />
+              </>
+            )}
+          </Button>
+        </form>
+
+        <div className="relative my-6">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t border-[#EAE7F2]" />
+          </div>
+
+          <div className="relative flex justify-center">
+            <span className="bg-white px-3 text-xs text-[#9290A2]">
+              OR CONTINUE WITH
+            </span>
+          </div>
+        </div>
+
+        <Button
+          type="button"
+          variant="outline"
+          onClick={handleGoogleRegister}
+          disabled={isDisabled}
+          className="h-11 w-full rounded-lg border-[#E7E3F0] bg-white font-medium text-[#393650] hover:bg-[#F8F6FC]"
+        >
+          {isGoogleLoading ? (
+            "Connecting to Google..."
+          ) : (
+            <>
+              <svg
+                viewBox="0 0 48 48"
+                className="mr-2 size-5"
+                aria-hidden="true"
+              >
+                <path
+                  fill="#EA4335"
+                  d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.06 13.22l7.98 6.19C11.93 13.72 17.45 9.5 24 9.5Z"
+                  transform="translate(0 5)"
+                />
+                <path
+                  fill="#4285F4"
+                  d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.76 7.18l7.73 6C44.42 37.93 46.98 31.88 46.98 24.55Z"
+                />
+                <path
+                  fill="#FBBC05"
+                  d="M10.03 28.59A14.4 14.4 0 0 1 9.25 24c0-1.59.27-3.13.78-4.59l-7.98-6.19A23.9 23.9 0 0 0 0 24c0 3.87.93 7.53 2.58 10.78l7.45-6.19Z"
+                />
+                <path
+                  fill="#34A853"
+                  d="M24 48c6.48 0 11.93-2.13 15.91-5.8l-7.73-6c-2.14 1.45-4.89 2.3-8.18 2.3-6.55 0-12.08-4.22-14.06-9.97l-7.98 6.19C6.41 42.62 14.62 48 24 48Z"
+                />
+              </svg>
+              Continue with Google
+            </>
+          )}
+        </Button>
+
+        <p className="mt-6 text-center text-sm text-[#77758A]">
+          Already have an account?{" "}
+          <Link
+            href="/login"
+            className="font-semibold text-[#62549A] hover:underline"
+          >
+            Sign in
+          </Link>
+        </p>
       </div>
     </main>
   );
