@@ -6,12 +6,14 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, ImagePlus, X, Upload, BookOpen } from "lucide-react";
 import { toast } from "sonner";
 import { Navbar } from "@/components/shared/Navbar";
+import { authClient } from "@/lib/auth-client";
 
 const categories = ["Fiction", "Science", "History", "Kids", "Others"];
 
 export default function AddBookPage() {
   const router = useRouter();
 
+  const { data: session, isPending } = authClient.useSession();
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
@@ -19,6 +21,12 @@ export default function AddBookPage() {
     if (!imagePreview) return;
     return () => URL.revokeObjectURL(imagePreview);
   }, [imagePreview]);
+
+  useEffect(() => {
+    if (!isPending && !session) {
+      router.replace("/login");
+    }
+  }, [isPending, session, router]);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -49,6 +57,20 @@ export default function AddBookPage() {
     event.preventDefault();
     toast.info("Book saving will be connected in the next step.");
   };
+
+  if (isPending || !session) {
+    return (
+      <>
+        <Navbar />
+
+        <main className="flex min-h-screen items-center justify-center bg-[#FAF6F0]">
+          <p className="text-sm font-medium text-[#75665B]">
+            Checking your session...
+          </p>
+        </main>
+      </>
+    );
+  }
 
   const inputClass =
     "w-full rounded-lg border border-[#DCCFC2] bg-white px-3 py-2.5 text-sm font-medium text-[#49372D] outline-none transition placeholder:font-normal placeholder:text-[#9A8B80] focus:border-[#B87559] focus:ring-2 focus:ring-[#C18469]/15";
