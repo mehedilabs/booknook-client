@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { BookOpen, ArrowRight, LibraryBig } from "lucide-react";
+import { BookCard } from "../books/BookCard";
 
 interface Book {
   _id: string;
@@ -138,55 +139,7 @@ export function LatestBooks() {
         {!isLoading && !error && books.length > 0 && (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {books.map((book) => (
-              <article
-                key={book._id}
-                className="group overflow-hidden rounded-2xl border border-[#EDE2D5] bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#59483D]/10"
-              >
-                <div className="relative flex h-60 items-center justify-center overflow-hidden bg-[#EDE2D5]">
-                  {book.image ? (
-                    <img
-                      src={book.image}
-                      alt={book.title}
-                      className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                    />
-                  ) : (
-                    <BookOpen className="size-16 text-[#A18B7A]" />
-                  )}
-
-                  <span className="absolute left-4 top-4 rounded-full bg-[#FAF6F0]/95 px-3 py-1.5 text-xs font-semibold text-[#59483D]">
-                    {book.category}
-                  </span>
-                </div>
-
-                <div className="p-5">
-                  <h3 className="line-clamp-1 text-lg font-bold text-[#292B27] transition-colors group-hover:text-[#4A6F58]">
-                    {book.title}
-                  </h3>
-
-                  <p className="mt-1 text-sm text-[#9B6B54]">
-                    by {book.author}
-                  </p>
-
-                  <p className="mt-3 line-clamp-2 min-h-10 text-sm leading-5 text-[#75665B]">
-                    {book.description}
-                  </p>
-
-                  <div className="mt-5 flex items-center justify-between border-t border-[#EDE2D5] pt-4">
-                    <span className="text-xs font-medium text-[#75665B]">
-                      {book.totalCopies}{" "}
-                      {book.totalCopies === 1 ? "copy" : "copies"} available
-                    </span>
-
-                    <Link
-                      href={`/books/${book._id}`}
-                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#4A6F58] transition hover:gap-2.5"
-                    >
-                      View Details
-                      <ArrowRight className="size-4" />
-                    </Link>
-                  </div>
-                </div>
-              </article>
+              <BookCard key={book._id} book={book} />
             ))}
           </div>
         )}
