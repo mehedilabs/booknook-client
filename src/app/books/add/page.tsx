@@ -9,6 +9,7 @@ import { Navbar } from "@/components/shared/Navbar";
 import { authClient } from "@/lib/auth-client";
 
 const categories = ["Fiction", "Science", "History", "Kids", "Others"];
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
 export default function AddBookPage() {
   const router = useRouter();
@@ -16,6 +17,7 @@ export default function AddBookPage() {
   const { data: session, isPending } = authClient.useSession();
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (!imagePreview) return;
@@ -53,9 +55,67 @@ export default function AddBookPage() {
     setImagePreview(null);
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    toast.info("Book saving will be connected in the next step.");
+
+    if (!imageFile) {
+      toast.error("Please upload a book cover image.");
+      return;
+    }
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    formData.append("image", imageFile);
+
+    setIsSubmitting(true);
+
+    try {
+      // Get Better Auth JWT
+      const tokenResponse = await fetch("/api/auth/token");
+
+      if (!tokenResponse.ok) {
+        throw new Error("Could not verify your login session.");
+      }
+
+      const tokenData = await tokenResponse.json();
+
+      if (!tokenData.token) {
+        throw new Error("Authentication token is missing.");
+      }
+
+      // Send book data to backend
+      const response = await fetch(`${API_URL}/books`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${tokenData.token}`,
+        },
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Failed to add book.");
+      }
+
+      toast.success("Book added successfully!");
+
+      form.reset();
+      setImageFile(null);
+      setImagePreview(null);
+
+      router.push("/books");
+      router.refresh();
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isPending || !session) {
@@ -282,9 +342,10 @@ export default function AddBookPage() {
 
               <button
                 type="submit"
-                className="rounded-lg bg-[#B87559] px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[#9F6249] focus:outline-none focus:ring-2 focus:ring-[#C18469]/30 focus:ring-offset-2"
+                disabled={isSubmitting}
+                className="rounded-lg bg-[#B87559] px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[#9F6249] focus:outline-none focus:ring-2 focus:ring-[#C18469]/30 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                Save Book
+                {isSubmitting ? "Saving Book..." : "Save Book"}
               </button>
             </div>
           </form>
