@@ -61,23 +61,20 @@ export function LatestBooks() {
   }, []);
 
   return (
-    <section className="bg-[#FAF6F0] px-5 py-20 sm:px-8 lg:px-10 lg:py-24">
+    <section className="bg-[#EEF1EA] px-5 py-16 sm:px-8 lg:px-10 lg:py-20">
       <div className="mx-auto max-w-7xl">
         {/* Section Heading */}
-        <div className="mb-12 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+        <div className="mb-10 flex flex-col justify-between gap-5 border-b border-[#D3DACD] pb-8 sm:flex-row sm:items-end">
           <div>
-            <div className="mb-3 flex items-center gap-2">
-              <span className="h-0.5 w-7 rounded-full bg-[#C18469]" />
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#9B6B54]">
-                Fresh From The Shelves
-              </span>
-            </div>
+            <p className="text-sm font-medium text-[#8A6414]">
+              Fresh from the shelves
+            </p>
 
-            <h2 className="text-3xl font-bold tracking-tight text-[#292B27] sm:text-4xl">
+            <h2 className="mt-2 font-serif text-3xl font-bold tracking-tight text-[#17302A] sm:text-4xl">
               Latest Books
             </h2>
 
-            <p className="mt-3 max-w-xl text-sm leading-7 text-[#75665B] sm:text-base">
+            <p className="mt-3 max-w-xl text-sm leading-7 text-[#5B6B61] sm:text-base">
               Explore the newest additions to our community library and find
               your next favorite read.
             </p>
@@ -85,27 +82,29 @@ export function LatestBooks() {
 
           <Link
             href="/books"
-            className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-[#4A6F58] transition hover:gap-3"
+            className="group inline-flex w-fit items-center gap-2 rounded-md text-sm font-semibold text-[#17302A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#17302A]"
           >
-            Explore All Books
-            <ArrowRight className="size-4" />
+            <span className="border-b border-[#17302A]/30 transition-colors group-hover:border-[#D9A441]">
+              Explore All Books
+            </span>
+            <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
 
         {/* Loading State */}
         {isLoading && (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 6 }).map((_, index) => (
-              <div
-                key={index}
-                className="animate-pulse overflow-hidden rounded-2xl border border-[#EDE2D5] bg-white"
-              >
-                <div className="h-56 bg-[#EDE2D5]" />
-                <div className="space-y-3 p-5">
-                  <div className="h-4 w-1/3 rounded bg-[#EDE2D5]" />
-                  <div className="h-5 w-3/4 rounded bg-[#EDE2D5]" />
-                  <div className="h-4 w-1/2 rounded bg-[#EDE2D5]" />
+              <div key={index} className="flex flex-col">
+                <div className="motion-safe:animate-pulse overflow-hidden rounded-md border border-[#D3DACD] bg-white">
+                  <div className="h-56 bg-[#DDE4D8]" />
+                  <div className="space-y-3 p-5">
+                    <div className="h-4 w-1/3 rounded bg-[#DDE4D8]" />
+                    <div className="h-5 w-3/4 rounded bg-[#DDE4D8]" />
+                    <div className="h-4 w-1/2 rounded bg-[#E8EDE4]" />
+                  </div>
                 </div>
+                <div className="mt-3 h-2 rounded-sm bg-[#C9B49B]" />
               </div>
             ))}
           </div>
@@ -113,33 +112,41 @@ export function LatestBooks() {
 
         {/* Error State */}
         {!isLoading && error && (
-          <div className="rounded-2xl border border-[#E6C8B8] bg-white px-5 py-12 text-center">
-            <BookOpen className="mx-auto mb-4 size-10 text-[#C18469]" />
-            <p className="text-sm font-medium text-[#75665B]">{error}</p>
+          <div className="flex items-center gap-4 rounded-md border border-[#E3C9C4] border-l-4 border-l-[#B5483B] bg-white px-6 py-6">
+            <BookOpen className="size-7 shrink-0 text-[#B5483B]" />
+            <p className="text-sm font-medium text-[#5B6B61]">{error}</p>
           </div>
         )}
 
         {/* Empty State */}
         {!isLoading && !error && books.length === 0 && (
-          <div className="rounded-2xl border border-dashed border-[#DCCABD] bg-white/60 px-5 py-16 text-center">
-            <div className="mx-auto mb-5 flex size-16 items-center justify-center rounded-2xl bg-[#EDE2D5]">
-              <LibraryBig className="size-8 text-[#9B6B54]" />
+          <div className="mx-auto max-w-xl overflow-hidden rounded-sm border border-[#D3DACD] bg-white shadow-[6px_6px_0_0_#D9A441]">
+            <div className="flex items-center gap-4 border-b-2 border-[#B5483B] px-6 py-6">
+              <div className="flex size-14 shrink-0 items-center justify-center rounded-sm bg-[#17302A]">
+                <LibraryBig className="size-7 text-[#D9A441]" />
+              </div>
+
+              <h3 className="font-serif text-2xl font-bold leading-tight text-[#17302A]">
+                No Books Yet
+              </h3>
             </div>
 
-            <h3 className="text-xl font-bold text-[#292B27]">No Books Yet</h3>
-
-            <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#75665B]">
-              Our library is waiting for its first collection. New books will
-              appear here as soon as they are added.
-            </p>
+            <div className="bg-[repeating-linear-gradient(to_bottom,transparent,transparent_31px,#DDE4D8_32px)] px-6 py-6">
+              <p className="text-sm leading-8 text-[#5B6B61]">
+                Our library is waiting for its first collection. New books will
+                appear here as soon as they are added.
+              </p>
+            </div>
           </div>
         )}
 
         {/* Books Grid */}
         {!isLoading && !error && books.length > 0 && (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {books.map((book) => (
-              <BookCard key={book._id} book={book} />
+              <div key={book._id} className="flex flex-col">
+                <BookCard book={book} />
+              </div>
             ))}
           </div>
         )}

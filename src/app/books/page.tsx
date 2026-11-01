@@ -101,29 +101,29 @@ export default function AllBooksPage() {
     <>
       <Navbar />
 
-      <main className="min-h-screen bg-[#FAF6F0]">
+      <main className="min-h-screen bg-[#EEF1EA]">
         {/* Page Header */}
-        <section className="border-b border-[#EDE2D5] bg-[#F5EAE1] px-5 py-6 sm:px-8 sm:py-8 lg:px-10">
+        <section className="border-b-4 border-[#D9A441] bg-[#17302A] px-5 py-6 sm:px-8 sm:py-8 lg:px-10">
           <div className="mx-auto max-w-7xl">
             <div className="mb-2 flex items-center gap-2">
-              <span className="h-0.5 w-7 rounded-full bg-[#C18469]" />
-              <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9B6B54] sm:text-xs">
+              <span className="h-0.5 w-7 rounded-full bg-[#D9A441]" />
+              <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#D9A441] sm:text-xs">
                 Explore Our Collection
               </span>
             </div>
 
-            <h1 className="text-2xl font-bold tracking-tight text-[#292B27] sm:text-3xl lg:text-4xl">
+            <h1 className="font-serif text-2xl font-bold tracking-tight text-[#F3EFE3] sm:text-3xl lg:text-4xl">
               Discover Your Next
-              <span className="text-[#C18469]"> Favorite Book</span>
+              <span className="text-[#D9A441]"> Favorite Book</span>
             </h1>
 
-            <p className="mt-2 max-w-2xl text-xs leading-6 text-[#75665B] sm:text-sm">
+            <p className="mt-2 max-w-2xl text-xs leading-6 text-[#C9D3C3] sm:text-sm">
               Explore books shared by our community, discover new stories, and
               find something wonderful to read.
             </p>
 
-            <div className="mt-3 flex items-center gap-2 text-xs text-[#75665B] sm:text-sm">
-              <LibraryBig className="size-4 text-[#4A6F58]" />
+            <div className="mt-3 flex items-center gap-2 text-xs text-[#C9D3C3] sm:text-sm">
+              <LibraryBig className="size-4 text-[#D9A441]" />
               <span>
                 {books.length} {books.length === 1 ? "Book" : "Books"} in our
                 collection
@@ -138,14 +138,14 @@ export default function AllBooksPage() {
             {/* Search and Filter */}
             <div className="mb-7 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <div className="relative w-full md:max-w-sm">
-                <Search className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-[#A18B7A]" />
+                <Search className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-[#8A9A8F]" />
 
                 <input
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Search by book title or author..."
-                  className="h-12 w-full rounded-xl border border-[#DCCABD] bg-white pl-12 pr-11 text-sm text-[#59483D] outline-none transition placeholder:text-[#A18B7A] focus:border-[#C18469] focus:ring-2 focus:ring-[#C18469]/15"
+                  className="h-12 w-full rounded-md border border-[#C9D3C3] bg-white pl-12 pr-11 text-sm font-medium text-[#17302A] outline-none transition placeholder:font-normal placeholder:text-[#8A9A8F] focus:border-[#17302A] focus:ring-2 focus:ring-[#D9A441]/40"
                 />
 
                 {searchTerm && (
@@ -153,7 +153,7 @@ export default function AllBooksPage() {
                     type="button"
                     onClick={() => setSearchTerm("")}
                     aria-label="Clear search"
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-[#A18B7A] transition hover:text-[#59483D]"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-[#8A9A8F] transition hover:text-[#17302A]"
                   >
                     <X className="size-4" />
                   </button>
@@ -161,12 +161,12 @@ export default function AllBooksPage() {
               </div>
 
               <div className="flex w-full items-center gap-3 md:w-auto">
-                <SlidersHorizontal className="size-5 shrink-0 text-[#9B6B54]" />
+                <SlidersHorizontal className="size-5 shrink-0 text-[#4F7A63]" />
 
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="h-12 w-full rounded-xl border border-[#DCCABD] bg-white px-4 text-sm font-medium text-[#59483D] outline-none transition focus:border-[#C18469] focus:ring-2 focus:ring-[#C18469]/15 md:w-52"
+                  className="h-12 w-full rounded-md border border-[#C9D3C3] bg-white px-4 text-sm font-medium text-[#17302A] outline-none transition focus:border-[#17302A] focus:ring-2 focus:ring-[#D9A441]/40 md:w-52"
                 >
                   {categories.map((category) => (
                     <option key={category} value={category}>
@@ -178,8 +178,8 @@ export default function AllBooksPage() {
             </div>
 
             {/* Result Information */}
-            <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-              <p className="text-sm font-medium text-[#75665B]">
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-[#D3DACD] pb-3">
+              <p className="text-sm font-medium text-[#5B6B61]">
                 {isLoading
                   ? "Loading books..."
                   : `Showing ${filteredBooks.length} of ${books.length} books`}
@@ -189,7 +189,7 @@ export default function AllBooksPage() {
                 <button
                   type="button"
                   onClick={clearFilters}
-                  className="text-sm font-semibold text-[#9B6B54] transition hover:text-[#59483D]"
+                  className="text-sm font-semibold text-[#17302A] underline-offset-4 transition hover:text-[#B5483B] hover:underline"
                 >
                   Clear Filters
                 </button>
@@ -202,13 +202,13 @@ export default function AllBooksPage() {
                 {Array.from({ length: 6 }).map((_, index) => (
                   <div
                     key={index}
-                    className="animate-pulse overflow-hidden rounded-2xl border border-[#EDE2D5] bg-white"
+                    className="animate-pulse overflow-hidden rounded-md border border-[#D3DACD] bg-white"
                   >
-                    <div className="h-60 bg-[#EDE2D5]" />
+                    <div className="h-60 bg-[#DDE4D8]" />
                     <div className="space-y-3 p-5">
-                      <div className="h-4 w-1/3 rounded bg-[#EDE2D5]" />
-                      <div className="h-5 w-3/4 rounded bg-[#EDE2D5]" />
-                      <div className="h-4 w-1/2 rounded bg-[#EDE2D5]" />
+                      <div className="h-4 w-1/3 rounded bg-[#DDE4D8]" />
+                      <div className="h-5 w-3/4 rounded bg-[#DDE4D8]" />
+                      <div className="h-4 w-1/2 rounded bg-[#DDE4D8]" />
                     </div>
                   </div>
                 ))}
@@ -217,29 +217,29 @@ export default function AllBooksPage() {
 
             {/* Error State */}
             {!isLoading && error && (
-              <div className="rounded-2xl border border-[#E6C8B8] bg-white px-5 py-14 text-center">
-                <BookOpen className="mx-auto mb-4 size-10 text-[#C18469]" />
+              <div className="rounded-md border border-[#B5483B]/40 bg-white px-5 py-14 text-center">
+                <BookOpen className="mx-auto mb-4 size-10 text-[#B5483B]" />
 
-                <h2 className="text-lg font-bold text-[#292B27]">
+                <h2 className="font-serif text-lg font-bold text-[#17302A]">
                   Unable to Load Books
                 </h2>
 
-                <p className="mt-2 text-sm text-[#75665B]">{error}</p>
+                <p className="mt-2 text-sm text-[#5B6B61]">{error}</p>
               </div>
             )}
 
             {/* Empty Library */}
             {!isLoading && !error && books.length === 0 && (
-              <div className="rounded-2xl border border-dashed border-[#DCCABD] bg-white/60 px-5 py-16 text-center">
-                <div className="mx-auto mb-5 flex size-16 items-center justify-center rounded-2xl bg-[#EDE2D5]">
-                  <LibraryBig className="size-8 text-[#9B6B54]" />
+              <div className="rounded-md border border-dashed border-[#17302A]/40 bg-white/60 px-5 py-16 text-center">
+                <div className="mx-auto mb-5 flex size-16 items-center justify-center rounded-sm bg-[#17302A]">
+                  <LibraryBig className="size-8 text-[#D9A441]" />
                 </div>
 
-                <h2 className="text-xl font-bold text-[#292B27]">
+                <h2 className="font-serif text-xl font-bold text-[#17302A]">
                   Our Library Is Waiting
                 </h2>
 
-                <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#75665B]">
+                <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#5B6B61]">
                   No books have been added yet. Once our community starts
                   sharing books, you will find them here.
                 </p>
@@ -251,21 +251,21 @@ export default function AllBooksPage() {
               !error &&
               books.length > 0 &&
               filteredBooks.length === 0 && (
-                <div className="rounded-2xl border border-dashed border-[#DCCABD] bg-white/60 px-5 py-14 text-center">
-                  <Search className="mx-auto mb-4 size-9 text-[#C18469]" />
+                <div className="rounded-md border border-dashed border-[#17302A]/40 bg-white/60 px-5 py-14 text-center">
+                  <Search className="mx-auto mb-4 size-9 text-[#4F7A63]" />
 
-                  <h2 className="text-lg font-bold text-[#292B27]">
+                  <h2 className="font-serif text-lg font-bold text-[#17302A]">
                     No Matching Books Found
                   </h2>
 
-                  <p className="mt-2 text-sm text-[#75665B]">
+                  <p className="mt-2 text-sm text-[#5B6B61]">
                     Try a different title, author, or category.
                   </p>
 
                   <button
                     type="button"
                     onClick={clearFilters}
-                    className="mt-5 text-sm font-semibold text-[#4A6F58] hover:underline"
+                    className="mt-5 rounded-md bg-[#17302A] px-4 py-2 text-sm font-semibold text-[#F3EFE3] transition-colors hover:bg-[#D9A441] hover:text-[#17302A]"
                   >
                     Clear all filters
                   </button>

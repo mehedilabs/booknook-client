@@ -123,8 +123,8 @@ export default function AddBookPage() {
       <>
         <Navbar />
 
-        <main className="flex min-h-screen items-center justify-center bg-[#FAF6F0]">
-          <p className="text-sm font-medium text-[#75665B]">
+        <main className="flex min-h-screen items-center justify-center bg-[#EDE6D3]">
+          <p className="text-sm font-medium text-[#4F7A63]">
             Checking your session...
           </p>
         </main>
@@ -133,39 +133,39 @@ export default function AddBookPage() {
   }
 
   const inputClass =
-    "w-full rounded-lg border border-[#DCCFC2] bg-white px-3 py-2.5 text-sm font-medium text-[#49372D] outline-none transition placeholder:font-normal placeholder:text-[#9A8B80] focus:border-[#B87559] focus:ring-2 focus:ring-[#C18469]/15";
+    "w-full rounded-lg border border-[#D3DACD] bg-white px-3 py-2.5 text-sm font-medium text-[#2F3E33] outline-none transition placeholder:font-normal placeholder:text-[#6B7A6E] focus:border-[#4F7A63] focus:ring-2 focus:ring-[#4F7A63]/15";
 
-  const labelClass = "mb-1.5 block text-[13px] font-semibold text-[#49372D]";
+  const labelClass = "mb-1.5 block text-[13px] font-semibold text-[#2F3E33]";
 
   return (
     <>
       <Navbar />
 
-      <main className="min-h-screen bg-[#FAF6F0] px-4 py-7 sm:px-6 sm:py-9">
+      <main className="min-h-screen bg-[#EEF1EA] px-4 py-7 sm:px-6 sm:py-9">
         <div className="mx-auto max-w-4xl">
           <Link
             href="/"
-            className="mb-5 inline-flex items-center gap-1.5 text-xs font-semibold text-[#75665B] transition hover:text-[#AD7057]"
+            className="mb-5 inline-flex items-center gap-1.5 text-xs font-semibold text-[#4F7A63] transition hover:text-[#3D5F4C]"
           >
             <ArrowLeft size={15} />
             Back to Home
           </Link>
 
           <div className="mb-6">
-            <h1 className="text-2xl font-bold tracking-tight text-[#392B24]">
+            <h1 className="text-2xl font-bold tracking-tight text-[#2F3E33]">
               Add a New Book
             </h1>
-            <p className="mt-1.5 text-sm text-[#75665B]">
+            <p className="mt-1.5 text-sm text-[#4F7A63]">
               Share a book with the BookNook community.
             </p>
           </div>
 
           <form onSubmit={handleSubmit}>
-            <div className="grid gap-6 rounded-xl border border-[#E5D8CC] bg-white p-4 shadow-sm sm:p-6 md:grid-cols-[1fr_250px] md:gap-7">
+            <div className="grid gap-6 rounded-xl border border-[#D3DACD] bg-white p-4 shadow-sm sm:p-6 md:grid-cols-[1fr_250px] md:gap-7">
               <section>
-                <div className="mb-5 flex items-center gap-2 border-b border-[#EFE6DE] pb-3">
-                  <BookOpen size={17} className="text-[#A66D50]" />
-                  <h2 className="text-sm font-bold text-[#49372D]">
+                <div className="mb-5 flex items-center gap-2 border-b border-[#D3DACD] pb-3">
+                  <BookOpen size={17} className="text-[#4F7A63]" />
+                  <h2 className="text-sm font-bold text-[#2F3E33]">
                     Book Information
                   </h2>
                 </div>
@@ -173,7 +173,7 @@ export default function AddBookPage() {
                 <div className="space-y-4">
                   <div>
                     <label htmlFor="title" className={labelClass}>
-                      Book Title <span className="text-[#B87559]">*</span>
+                      Book Title <span className="text-[#7A2E2E]">*</span>
                     </label>
                     <input
                       id="title"
@@ -188,7 +188,7 @@ export default function AddBookPage() {
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
                       <label htmlFor="author" className={labelClass}>
-                        Author Name <span className="text-[#B87559]">*</span>
+                        Author Name <span className="text-[#7A2E2E]">*</span>
                       </label>
                       <input
                         id="author"
@@ -202,7 +202,7 @@ export default function AddBookPage() {
 
                     <div>
                       <label htmlFor="category" className={labelClass}>
-                        Category <span className="text-[#B87559]">*</span>
+                        Category <span className="text-[#7A2E2E]">*</span>
                       </label>
                       <select
                         id="category"
@@ -225,7 +225,7 @@ export default function AddBookPage() {
 
                   <div className="max-w-[180px]">
                     <label htmlFor="totalCopies" className={labelClass}>
-                      Total Copies <span className="text-[#B87559]">*</span>
+                      Total Copies <span className="text-[#7A2E2E]">*</span>
                     </label>
                     <input
                       id="totalCopies"
@@ -240,7 +240,7 @@ export default function AddBookPage() {
 
                   <div>
                     <label htmlFor="description" className={labelClass}>
-                      Description <span className="text-[#B87559]">*</span>
+                      Description <span className="text-[#7A2E2E]">*</span>
                     </label>
                     <textarea
                       id="description"
@@ -255,22 +255,22 @@ export default function AddBookPage() {
               </section>
 
               <aside>
-                <div className="mb-5 border-b border-[#EFE6DE] pb-3">
-                  <h2 className="text-sm font-bold text-[#49372D]">
+                <div className="mb-5 border-b border-[#D3DACD] pb-3">
+                  <h2 className="text-sm font-bold text-[#2F3E33]">
                     Book Cover
                   </h2>
-                  <p className="mt-1 text-xs text-[#75665B]">
+                  <p className="mt-1 text-xs text-[#4F7A63]">
                     Upload an image from your device.
                   </p>
                 </div>
 
                 {imagePreview ? (
-                  <div className="relative rounded-lg border border-[#E5D8CC] bg-[#FAF6F0] p-3">
+                  <div className="relative rounded-lg border border-[#D3DACD] bg-[#EDE6D3] p-3">
                     <button
                       type="button"
                       onClick={removeImage}
                       aria-label="Remove image"
-                      className="absolute right-2 top-2 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#9B6B54] shadow-sm hover:bg-[#F3E8DD]"
+                      className="absolute right-2 top-2 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#7A2E2E] shadow-sm hover:bg-[#F6F8F3]"
                     >
                       <X size={15} />
                     </button>
@@ -283,11 +283,11 @@ export default function AddBookPage() {
                       />
                     </div>
 
-                    <p className="mt-2 truncate text-center text-xs font-medium text-[#49372D]">
+                    <p className="mt-2 truncate text-center text-xs font-medium text-[#2F3E33]">
                       {imageFile?.name}
                     </p>
 
-                    <label className="mt-3 block cursor-pointer rounded-lg border border-[#DCCFC2] bg-white px-3 py-2 text-center text-xs font-semibold text-[#875B43] hover:bg-[#FAF6F0]">
+                    <label className="mt-3 block cursor-pointer rounded-lg border border-[#D3DACD] bg-white px-3 py-2 text-center text-xs font-semibold text-[#4F7A63] hover:bg-[#F6F8F3]">
                       Change Image
                       <input
                         type="file"
@@ -298,24 +298,24 @@ export default function AddBookPage() {
                     </label>
                   </div>
                 ) : (
-                  <label className="flex min-h-[235px] cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-[#D8C1AF] bg-[#FAF6F0] px-3 py-6 text-center transition hover:border-[#B87559] hover:bg-[#F7EEE6]">
-                    <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#EDE2D5] text-[#9B6248]">
+                  <label className="flex min-h-[235px] cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-[#D3DACD] bg-[#E4EBDF] px-3 py-6 text-center transition hover:border-[#4F7A63] hover:bg-[#F6F8F3]">
+                    <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#D3DACD] text-[#4F7A63]">
                       <ImagePlus size={21} />
                     </div>
 
-                    <span className="text-xs font-semibold text-[#49372D]">
+                    <span className="text-xs font-semibold text-[#2F3E33]">
                       Choose book cover
                     </span>
-                    <span className="mt-1.5 text-[11px] text-[#75665B]">
+                    <span className="mt-1.5 text-[11px] text-[#4F7A63]">
                       PNG, JPG, WEBP
                     </span>
 
-                    <span className="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-[#B87559] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#9F6249]">
+                    <span className="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-[#4F7A63] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#3D5F4C]">
                       <Upload size={14} />
                       Browse Files
                     </span>
 
-                    <span className="mt-3 text-[10px] text-[#8B796C]">
+                    <span className="mt-3 text-[10px] text-[#6B7A6E]">
                       Maximum size: 5 MB
                     </span>
 
@@ -335,7 +335,7 @@ export default function AddBookPage() {
               <button
                 type="button"
                 onClick={() => router.push("/")}
-                className="rounded-lg border border-[#DCCFC2] bg-white px-5 py-2.5 text-sm font-semibold text-[#59483D] transition hover:bg-[#F5EEE7]"
+                className="rounded-lg border border-[#D3DACD] bg-white px-5 py-2.5 text-sm font-semibold text-[#4F7A63] transition hover:bg-[#F6F8F3]"
               >
                 Cancel
               </button>
@@ -343,7 +343,7 @@ export default function AddBookPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="rounded-lg bg-[#B87559] px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[#9F6249] focus:outline-none focus:ring-2 focus:ring-[#C18469]/30 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+                className="rounded-lg bg-[#4F7A63] px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[#3D5F4C] focus:outline-none focus:ring-2 focus:ring-[#4F7A63]/30 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isSubmitting ? "Saving Book..." : "Save Book"}
               </button>

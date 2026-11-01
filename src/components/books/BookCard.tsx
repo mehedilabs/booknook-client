@@ -6,61 +6,94 @@ interface BookCardProps {
   title: string;
   author: string;
   image: string;
+  category?: string;
 }
 
 export function BookCard({ book }: { book: BookCardProps }) {
   return (
-    <article className="group relative flex flex-col overflow-hidden rounded-3xl border border-[#EADFD3] bg-[#FFFDF9] shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-[#C17F64]/40 hover:shadow-2xl hover:shadow-[#C17F64]/20">
-      {/* Image */}
-      <div className="relative h-72 overflow-hidden bg-gradient-to-br from-[#F3E8DC] to-[#FAF6EF]">
-        {book.image ? (
-          <>
+    <article className="group relative flex flex-col overflow-hidden rounded-lg border border-[#D3DACD] bg-white transition-all duration-300 focus-within:ring-2 focus-within:ring-[#17302A]/50 hover:border-[#17302A]/40 hover:shadow-2xl hover:shadow-[#17302A]/15 motion-safe:hover:-translate-y-1">
+      {/* Display case */}
+      <div className="relative flex h-80 items-end justify-center bg-[radial-gradient(ellipse_at_50%_30%,#2F5A49_0%,#17302A_72%)] pb-3 [perspective:800px]">
+        {/* Wooden shelf */}
+        <span
+          aria-hidden="true"
+          className="absolute inset-x-0 bottom-0 h-3 border-t-2 border-[#A98563] bg-[#7A5A3E]"
+        />
+
+        {/* Floor shadow */}
+        <span
+          aria-hidden="true"
+          className="absolute bottom-[0.6rem] left-1/2 h-3 w-36 -translate-x-1/2 rounded-full bg-black/50 blur-md transition-all duration-500 group-hover:w-28 group-hover:opacity-70"
+        />
+
+        {/* Category tag */}
+        {book.category && (
+          <span className="absolute left-3 top-3 z-20 rounded-full border border-[#D9A441]/50 bg-white/5 px-3 py-1 text-xs font-semibold text-[#D9A441] backdrop-blur-sm">
+            {book.category}
+          </span>
+        )}
+
+        {/* The book */}
+        <div className="relative z-10 shadow-[8px_10px_18px_-6px_rgba(0,0,0,0.6)] transition-transform duration-500 ease-out motion-safe:group-hover:[transform:rotateY(-14deg)_translateY(-6px)]">
+          {/* Page edges */}
+          <span
+            aria-hidden="true"
+            className="absolute inset-y-[3px] -right-1 w-1.5 rounded-r-[2px] bg-[repeating-linear-gradient(to_right,#F3EFE3_0,#F3EFE3_1px,#BFB8A4_1px,#BFB8A4_2px)]"
+          />
+
+          {book.image ? (
             <img
               src={book.image}
               alt={book.title}
               loading="lazy"
-              className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-110"
+              className="relative h-60 w-40 rounded-sm object-cover"
             />
-            {/* soft warm overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#2B2420]/70 via-transparent to-transparent opacity-0 transition duration-500 group-hover:opacity-100" />
-          </>
-        ) : (
-          <div className="flex h-full w-full items-center justify-center">
-            <BookOpen className="size-16 text-[#C17F64]/60" />
-          </div>
-        )}
+          ) : (
+            <div className="relative flex h-60 w-40 items-center justify-center rounded-sm border border-[#D9A441]/60 bg-[#2F5A49]">
+              <div className="flex h-[13.5rem] w-[8.5rem] items-center justify-center border border-[#D9A441]/40">
+                <BookOpen className="size-10 text-[#D9A441]" />
+              </div>
+            </div>
+          )}
 
-        {/* floating arrow badge */}
-        <Link
-          href={`/books/${book._id}`}
-          aria-label={`View details of ${book.title}`}
-          className="absolute right-4 top-4 flex size-10 translate-y-2 items-center justify-center rounded-full bg-[#FAF6EF]/90 text-[#C17F64] opacity-0 shadow-lg backdrop-blur transition duration-300 group-hover:translate-y-0 group-hover:opacity-100 hover:bg-[#C17F64] hover:text-white"
-        >
-          <ArrowUpRight className="size-5" />
-        </Link>
+          {/* Spine fold and light */}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 rounded-sm bg-[linear-gradient(to_right,rgba(0,0,0,0.38),rgba(255,255,255,0.28)_4%,rgba(0,0,0,0)_10%,rgba(0,0,0,0)_92%,rgba(0,0,0,0.18))]"
+          />
+        </div>
       </div>
 
       {/* Content */}
-      <div className="flex flex-1 flex-col gap-4 p-6">
-        <div className="space-y-1.5">
-          <h3 className="line-clamp-2 font-serif text-lg font-bold leading-snug text-[#2B2420] transition-colors group-hover:text-[#C17F64]">
+      <div className="flex flex-1 flex-col p-5">
+        <div className="mb-5">
+          <h3 className="line-clamp-2 font-serif text-xl font-bold leading-snug text-[#17302A]">
             {book.title}
           </h3>
-          <p className="truncate text-sm font-medium text-[#8A7B70]">
-            by <span className="text-[#5A4A40]">{book.author}</span>
+          <p className="mt-1.5 truncate text-sm text-[#5B6B61]">
+            by <span className="font-medium text-[#3F5249]">{book.author}</span>
           </p>
         </div>
 
-        <div className="mt-auto h-px w-full bg-gradient-to-r from-[#EADFD3] via-[#EADFD3] to-transparent" />
-
+        {/* The whole card is clickable through this link */}
         <Link
           href={`/books/${book._id}`}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#C17F64] px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-[#C17F64]/25 transition-all duration-300 hover:gap-3 hover:bg-[#A96A50] hover:shadow-lg hover:shadow-[#C17F64]/35 active:scale-[0.98]"
+          aria-label={`View details of ${book.title}`}
+          className="mt-auto flex items-center justify-between border-t border-[#DDE4D8] pt-4 text-sm font-semibold text-[#17302A] outline-none after:absolute after:inset-0"
         >
-          View Details
-          <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          <span>View Details</span>
+
+          <span className="flex size-9 items-center justify-center rounded-full bg-[#17302A] text-[#D9A441] transition-colors duration-300 group-hover:bg-[#D9A441] group-hover:text-[#17302A]">
+            <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </span>
         </Link>
       </div>
+
+      {/* Gold line that slides in on hover */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-[#D9A441] transition-transform duration-300 group-hover:scale-x-100"
+      />
     </article>
   );
 }
