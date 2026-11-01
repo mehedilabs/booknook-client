@@ -2,6 +2,7 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "@better-auth/mongo-adapter";
 import { MongoClient } from "mongodb";
+import { jwt } from "better-auth/plugins";
 
 const mongoConnectionString = process.env.MONGODB_URI;
 
@@ -37,4 +38,6 @@ account: {
     requireLocalEmailVerified: false,
   },
 },
+plugins: [jwt()],
+
 });
