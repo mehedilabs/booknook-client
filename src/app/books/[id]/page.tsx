@@ -52,7 +52,19 @@ function BookDetailsContent() {
   const [borrowedBookId, setBorrowedBookId] = useState<string | null>(null);
   const [isBorrowDialogOpen, setIsBorrowDialogOpen] = useState(false);
 
+  // Redirect users who are not logged in
   useEffect(() => {
+    if (!isSessionPending && !session) {
+      router.replace(
+        `/login?callbackURL=${encodeURIComponent(`/books/${id}`)}`,
+      );
+    }
+  }, [id, isSessionPending, session, router]);
+
+  // Fetch book details only after authentication
+  useEffect(() => {
+    if (isSessionPending || !session) return;
+
     const controller = new AbortController();
 
     const fetchBook = async () => {
@@ -91,7 +103,7 @@ function BookDetailsContent() {
     fetchBook();
 
     return () => controller.abort();
-  }, [id]);
+  }, [id, isSessionPending, session]);
 
   // Check whether the current user has already borrowed this book
   useEffect(() => {
@@ -222,6 +234,18 @@ function BookDetailsContent() {
   const isOwnBook = !!session && !!book && book.userId === session.user.id;
   const isAlreadyBorrowed = !!book && borrowedBookId === book._id;
 
+  // Keep book details hidden while checking or redirecting authentication
+  if (isSessionPending || !session) {
+    return (
+      <>
+        <Navbar />
+        <main className="flex min-h-screen items-center justify-center bg-[#EEF1EA] px-4">
+          <p className="text-sm text-[#5B6B61]">Checking your account...</p>
+        </main>
+      </>
+    );
+  }
+
   return (
     <>
       <Navbar />
@@ -347,21 +371,27 @@ function BookDetailsContent() {
                         </p>
                       </div>
                     </div>
+
                     {/* Added By */}
-                    <div className="mt-4 flex items-center gap-3 rounded-md p-3 sm:mt-5">
+                    <div className="col-span-2 mt-4 flex min-w-0 items-center gap-3 rounded-md p-3 sm:mt-5">
                       <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#17302A] font-serif text-base font-bold text-[#D9A441] sm:size-10">
                         {(book.userName || "U").charAt(0).toUpperCase()}
                       </div>
 
-                      <div className="min-w-0">
+                      <div className="min-w-0 flex-1">
                         <p className="text-xs text-[#5B6B61]">Added by</p>
 
-                        <p className="truncate font-serif text-base font-bold leading-tight text-[#17302A]">
-                          {book.userName || "Unknown User"}
+                        <p className="font-serif text-base font-bold leading-tight text-[#17302A]">
+                          <span className="sm:hidden">
+                            {(book.userName || "Unknown User").split(" ")[0]}
+                          </span>
+                          <span className="hidden sm:inline">
+                            {book.userName || "Unknown User"}
+                          </span>
                         </p>
 
                         <p
-                          className="truncate text-xs text-[#5B6B61]"
+                          className="break-all text-[10px] leading-4 text-[#5B6B61] sm:text-xs"
                           title={book.userEmail}
                         >
                           {book.userEmail}
@@ -379,13 +409,6 @@ function BookDetailsContent() {
                       >
                         Checking account...
                       </button>
-                    ) : !session ? (
-                      <Link
-                        href="/login"
-                        className="inline-flex w-full items-center justify-center rounded-md bg-[#17302A] px-6 py-3 text-sm font-semibold text-[#F3EFE3] transition-colors hover:bg-[#D9A441] hover:text-[#17302A] sm:w-auto"
-                      >
-                        Login to Borrow
-                      </Link>
                     ) : isOwnBook ? (
                       <button
                         disabled

@@ -217,6 +217,19 @@ export default function MyBooksPage() {
     }
   };
 
+  if (isPending || !session) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#EEF1EA]">
+        <div className="text-center">
+          <BookOpen className="mx-auto size-10 animate-pulse text-[#17302A]" />
+          <p className="mt-4 text-sm text-[#5B6B61]">
+            Checking your session...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <Navbar />

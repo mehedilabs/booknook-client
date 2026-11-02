@@ -26,7 +26,7 @@ export default function AddBookPage() {
 
   useEffect(() => {
     if (!isPending && !session) {
-      router.replace("/login");
+      router.replace(`/login?callbackURL=${encodeURIComponent("/books/add")}`);
     }
   }, [isPending, session, router]);
 

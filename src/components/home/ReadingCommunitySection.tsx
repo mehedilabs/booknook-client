@@ -31,11 +31,9 @@ export function ReadingCommunitySection() {
         {/* Section heading */}
         <div className="mx-auto max-w-2xl text-center">
           <div className="flex items-center justify-center gap-3">
-            <span className="h-px w-8 bg-[#D9A441]" />
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#8A6414] sm:text-sm">
               The BookNook Experience
             </p>
-            <span className="h-px w-8 bg-[#D9A441]" />
           </div>
 
           <h2 className="mt-4 font-serif text-3xl font-bold leading-tight text-[#17302A] sm:text-4xl lg:text-5xl">
