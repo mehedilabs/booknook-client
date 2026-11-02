@@ -345,7 +345,7 @@ export default function AddBookPage() {
                 disabled={isSubmitting}
                 className="rounded-lg bg-[#4F7A63] px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[#3D5F4C] focus:outline-none focus:ring-2 focus:ring-[#4F7A63]/30 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {isSubmitting ? "Saving Book..." : "Save Book"}
+                {isSubmitting ? "Adding Book..." : "Add Book"}
               </button>
             </div>
           </form>

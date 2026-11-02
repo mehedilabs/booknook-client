@@ -179,7 +179,7 @@ export function EditBookDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         showCloseButton
-        className="max-h-[90vh] w-full max-w-[calc(100%-1rem)] gap-3 overflow-y-auto rounded-md border-2 border-[#17302A] bg-[#EEF1EA] p-4 text-[#17302A] shadow-[4px_4px_0_0_#D9A441] sm:max-w-3xl sm:p-5"
+        className="max-h-[90vh] w-full max-w-[calc(100%-1rem)] gap-3 overflow-y-auto rounded-md border-2 border-[#17302A] bg-[#EEF1EA] p-4 text-[#17302A] shadow-xl sm:max-w-3xl sm:p-5"
       >
         <DialogHeader className="border-b-2 border-[#D9A441] pb-3 pr-9 text-left">
           <DialogTitle className="font-serif text-2xl font-bold tracking-tight text-[#17302A]">
