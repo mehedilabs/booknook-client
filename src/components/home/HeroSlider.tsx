@@ -63,7 +63,7 @@ export function HeroSlider() {
 
   return (
     <section className="booknook-hero-swiper relative mx-auto w-full overflow-hidden bg-[#17302A]">
-      <div className="relative h-[500px] min-h-[460px] max-h-[580px] w-full sm:h-[550px] lg:h-[570px]">
+      <div className="relative h-[340px] w-full sm:h-[550px] lg:h-[570px]">
         {slidesData.map((slide, index) => (
           <div
             key={slide.id}
@@ -85,7 +85,7 @@ export function HeroSlider() {
             <div className="absolute inset-0 bg-gradient-to-r from-[#0F211C]/90 via-[#0F211C]/70 to-[#0F211C]/30" />
 
             {/* Slide Content */}
-            <div className="relative z-20 flex h-full items-center px-6 sm:px-10 md:px-[8%] lg:px-[10%]">
+            <div className="relative z-20 flex h-full items-center px-6 pt-5 sm:px-10 sm:pt-0 md:px-[8%] lg:px-[10%]">
               <div
                 className={`max-w-2xl transition-all duration-1000 delay-200 ${
                   index === currentIndex
@@ -93,23 +93,23 @@ export function HeroSlider() {
                     : "translate-y-8 opacity-0"
                 }`}
               >
-                <p className="text-sm font-medium text-[#D9A441] sm:text-base">
+                <p className="text-xs font-medium text-[#D9A441] sm:text-base">
                   {slide.brand}
                 </p>
 
-                <h1 className="mt-4 max-w-xl font-serif text-[40px] font-bold leading-[1.15] tracking-tight text-[#F3EFE3] sm:text-5xl md:text-6xl lg:text-[64px]">
+                <h1 className="mt-2 max-w-xl font-serif text-[26px] font-bold leading-[1.15] tracking-tight text-[#F3EFE3] sm:mt-4 sm:text-5xl md:text-6xl lg:text-[64px]">
                   {slide.title}
                 </h1>
 
-                <p className="mt-6 max-w-lg text-sm leading-7 text-[#D5DED7] sm:text-base sm:leading-8">
+                <p className="mt-2 line-clamp-2 max-w-lg text-xs leading-5 text-[#D5DED7] sm:mt-6 sm:line-clamp-none sm:text-base sm:leading-8">
                   {slide.description}
                 </p>
 
-                <div className="mt-9">
+                <div className="mt-4 sm:mt-9">
                   <Link
                     href={slide.link}
                     tabIndex={index === currentIndex ? 0 : -1}
-                    className="group inline-flex items-center gap-3 rounded-md bg-[#D9A441] px-7 py-3.5 text-sm font-semibold text-[#17302A] transition-colors duration-300 hover:bg-[#E5B755] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F3EFE3]"
+                    className="group inline-flex items-center gap-2 rounded-md bg-[#D9A441] px-5 py-2.5 text-sm font-semibold text-[#17302A] transition-colors duration-300 hover:bg-[#E5B755] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F3EFE3] sm:gap-3 sm:px-7 sm:py-3.5"
                   >
                     {slide.buttonText}
                     <ArrowRight
@@ -123,8 +123,8 @@ export function HeroSlider() {
           </div>
         ))}
 
-        {/* Slider Navigation (aligned with the text) */}
-        <div className="absolute bottom-9 left-6 z-30 flex items-center gap-2.5 sm:left-10 md:left-[8%] lg:left-[10%]">
+        {/* Slider Navigation: small and centered on every screen size */}
+        <div className="absolute bottom-3 left-1/2 z-30 flex -translate-x-1/2 items-center gap-2 sm:bottom-9">
           {slidesData.map((slide, index) => (
             <button
               key={slide.id}
@@ -134,8 +134,8 @@ export function HeroSlider() {
               aria-current={index === currentIndex ? "true" : undefined}
               className={`h-1 rounded-full transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F3EFE3] ${
                 index === currentIndex
-                  ? "w-10 bg-[#D9A441]"
-                  : "w-5 bg-[#F3EFE3]/40 hover:bg-[#F3EFE3]/80"
+                  ? "w-5 bg-[#D9A441] sm:w-6"
+                  : "w-2 bg-[#F3EFE3]/40 hover:bg-[#F3EFE3]/80 sm:w-3"
               }`}
             />
           ))}
