@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import {
   BookOpen,
+  Check,
+  ChevronDown,
   Search,
   LibraryBig,
   SlidersHorizontal,
@@ -33,6 +35,98 @@ const categories = [
   "Kids",
   "Others",
 ];
+
+function CategoryDropdown({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (category: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setOpen(false);
+      }
+    };
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [open]);
+
+  return (
+    <div ref={containerRef} className="relative w-full md:w-52">
+      <button
+        type="button"
+        onClick={() => setOpen((current) => !current)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label="Filter by category"
+        className={`flex h-10 w-full items-center justify-between gap-2 rounded-md border bg-white px-4 text-sm font-medium text-[#17302A] outline-none transition focus-visible:border-[#17302A] focus-visible:ring-2 focus-visible:ring-[#D9A441]/40 ${
+          open
+            ? "border-[#17302A] ring-2 ring-[#D9A441]/40"
+            : "border-[#C9D3C3]"
+        }`}
+      >
+        <span className="truncate">{value}</span>
+        <ChevronDown
+          className={`size-4 shrink-0 text-[#4F7A63] transition-transform ${
+            open ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+
+      {open && (
+        <ul
+          role="listbox"
+          aria-label="Categories"
+          className="absolute left-0 right-0 z-20 mt-1.5 overflow-hidden rounded-md border border-[#C9D3C3] bg-white py-1 shadow-lg"
+        >
+          {categories.map((category) => {
+            const isSelected = category === value;
+
+            return (
+              <li key={category} role="option" aria-selected={isSelected}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    onChange(category);
+                    setOpen(false);
+                  }}
+                  className={`flex w-full items-center justify-between px-4 py-2.5 text-left text-sm transition-colors ${
+                    isSelected
+                      ? "bg-[#E4EBDF] font-semibold text-[#17302A]"
+                      : "text-[#17302A] hover:bg-[#F6F8F3]"
+                  }`}
+                >
+                  {category}
+                  {isSelected && <Check className="size-4 text-[#4F7A63]" />}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
+  );
+}
 
 export default function AllBooksPage() {
   const [books, setBooks] = useState<Book[]>([]);
@@ -106,7 +200,6 @@ export default function AllBooksPage() {
         <section className="border-b-4 border-[#D9A441] bg-[#17302A] px-5 py-6 sm:px-8 sm:py-8 lg:px-10">
           <div className="mx-auto max-w-7xl">
             <div className="mb-2 flex items-center gap-2">
-              <span className="h-0.5 w-7 rounded-full bg-[#D9A441]" />
               <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#D9A441] sm:text-xs">
                 Explore Our Collection
               </span>
@@ -133,10 +226,10 @@ export default function AllBooksPage() {
         </section>
 
         {/* Books Section */}
-        <section className="px-5 py-12 sm:px-8 sm:py-16 lg:px-10">
+        <section className="px-5 py-8 sm:px-8 sm:py-16 lg:px-10">
           <div className="mx-auto max-w-7xl">
             {/* Search and Filter */}
-            <div className="mb-7 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div className="mb-5 flex flex-col gap-3 sm:mb-7 md:flex-row md:items-center md:justify-between">
               <div className="relative w-full md:max-w-sm">
                 <Search className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-[#8A9A8F]" />
 
@@ -145,7 +238,7 @@ export default function AllBooksPage() {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Search by book title or author..."
-                  className="h-12 w-full rounded-md border border-[#C9D3C3] bg-white pl-12 pr-11 text-sm font-medium text-[#17302A] outline-none transition placeholder:font-normal placeholder:text-[#8A9A8F] focus:border-[#17302A] focus:ring-2 focus:ring-[#D9A441]/40"
+                  className="h-10 w-full rounded-md border border-[#C9D3C3] bg-white pl-12 pr-11 text-sm font-medium text-[#17302A] outline-none transition placeholder:font-normal placeholder:text-[#8A9A8F] focus:border-[#17302A] focus:ring-2 focus:ring-[#D9A441]/40"
                 />
 
                 {searchTerm && (
@@ -161,24 +254,17 @@ export default function AllBooksPage() {
               </div>
 
               <div className="flex w-full items-center gap-3 md:w-auto">
-                <SlidersHorizontal className="size-5 shrink-0 text-[#4F7A63]" />
+                <SlidersHorizontal className="hidden size-5 shrink-0 text-[#4F7A63] md:block" />
 
-                <select
+                <CategoryDropdown
                   value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="h-12 w-full rounded-md border border-[#C9D3C3] bg-white px-4 text-sm font-medium text-[#17302A] outline-none transition focus:border-[#17302A] focus:ring-2 focus:ring-[#D9A441]/40 md:w-52"
-                >
-                  {categories.map((category) => (
-                    <option key={category} value={category}>
-                      {category}
-                    </option>
-                  ))}
-                </select>
+                  onChange={setSelectedCategory}
+                />
               </div>
             </div>
 
             {/* Result Information */}
-            <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-[#D3DACD] pb-3">
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-3 border-b border-[#D3DACD] pb-3 sm:mb-6">
               <p className="text-sm font-medium text-[#5B6B61]">
                 {isLoading
                   ? "Loading books..."

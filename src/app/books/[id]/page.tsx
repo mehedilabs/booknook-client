@@ -226,11 +226,11 @@ function BookDetailsContent() {
     <>
       <Navbar />
 
-      <main className="min-h-screen bg-[#EEF1EA] px-5 py-8 sm:px-8 sm:py-12 lg:px-10">
+      <main className="min-h-screen bg-[#EEF1EA] px-4 py-5 sm:px-8 sm:py-12 lg:px-10">
         <div className="mx-auto max-w-5xl">
           <Link
             href="/books"
-            className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-[#17302A] transition hover:gap-3 hover:text-[#4F7A63]"
+            className="mb-4 inline-flex items-center gap-2 text-sm font-semibold text-[#17302A] transition hover:gap-3 hover:text-[#4F7A63] sm:mb-6"
           >
             <ArrowLeft className="size-4" />
             Back to All Books
@@ -238,20 +238,20 @@ function BookDetailsContent() {
 
           {/* Loading */}
           {isLoading && (
-            <div className="grid animate-pulse gap-8 rounded-md border border-[#D3DACD] bg-white p-5 sm:p-8 md:grid-cols-[320px_1fr]">
-              <div className="aspect-[3/4] rounded-md bg-[#DDE4D8]" />
-              <div className="space-y-5 py-2">
+            <div className="grid animate-pulse gap-4 rounded-md border border-[#D3DACD] bg-white p-4 sm:gap-8 sm:p-8 md:grid-cols-[320px_1fr]">
+              <div className="h-40 rounded-md bg-[#DDE4D8] sm:aspect-[3/4] sm:h-auto" />
+              <div className="space-y-4 py-2">
                 <div className="h-6 w-24 rounded-full bg-[#DDE4D8]" />
-                <div className="h-9 w-3/4 rounded bg-[#DDE4D8]" />
+                <div className="h-8 w-3/4 rounded bg-[#DDE4D8]" />
                 <div className="h-5 w-1/3 rounded bg-[#E8EDE4]" />
-                <div className="h-28 rounded bg-[#E8EDE4]" />
+                <div className="h-24 rounded bg-[#E8EDE4]" />
               </div>
             </div>
           )}
 
           {/* Error */}
           {!isLoading && error && (
-            <div className="rounded-md border border-[#E3C9C4] border-l-4 border-l-[#B5483B] bg-white px-6 py-12 text-center">
+            <div className="rounded-md border border-[#E3C9C4] border-l-4 border-l-[#B5483B] bg-white px-6 py-10 text-center">
               <BookOpen className="mx-auto mb-4 size-10 text-[#B5483B]" />
 
               <h1 className="font-serif text-xl font-bold text-[#17302A]">
@@ -275,99 +275,103 @@ function BookDetailsContent() {
             <article className="overflow-hidden rounded-md border border-[#D3DACD] bg-white">
               <div className="h-1.5 bg-[#D9A441]" />
 
-              <div className="grid gap-8 p-5 sm:p-8 md:grid-cols-[320px_1fr] md:gap-10">
+              <div className="grid gap-4 p-4 sm:gap-8 sm:p-8 md:grid-cols-[320px_1fr] md:gap-10">
                 {/* Cover */}
-                <div className="flex items-center justify-center rounded-md bg-[#F6F8F3] p-6 md:self-start">
+                <div className="flex items-center justify-center rounded-md bg-[#F6F8F3] p-3 sm:p-6 md:self-start">
                   {book.image ? (
                     <img
                       src={book.image}
                       alt={book.title}
-                      className="max-h-[420px] w-auto max-w-full rounded-sm object-contain shadow-md"
+                      className="max-h-44 w-auto max-w-full rounded-sm object-contain shadow-md sm:max-h-[420px]"
                     />
                   ) : (
-                    <div className="flex aspect-[3/4] w-full items-center justify-center">
-                      <BookOpen className="size-20 text-[#8A9A8F]" />
+                    <div className="flex h-36 w-full items-center justify-center sm:aspect-[3/4] sm:h-auto">
+                      <BookOpen className="size-14 text-[#8A9A8F] sm:size-20" />
                     </div>
                   )}
                 </div>
 
                 {/* Info */}
                 <div className="flex flex-col">
-                  <span className="w-fit rounded-full bg-[#E4EBDF] px-3.5 py-1.5 text-xs font-semibold text-[#17302A]">
+                  <span className="w-fit rounded-full bg-[#E4EBDF] px-3 py-1 text-xs font-semibold text-[#17302A] sm:px-3.5 sm:py-1.5">
                     {book.category}
                   </span>
 
-                  <h1 className="mt-4 font-serif text-3xl font-bold leading-tight tracking-tight text-[#17302A] sm:text-4xl">
+                  <h1 className="mt-3 font-serif text-2xl font-bold leading-tight tracking-tight text-[#17302A] sm:mt-4 sm:text-4xl">
                     {book.title}
                   </h1>
 
-                  <div className="mt-3 flex items-center gap-2 text-[#4F7A63]">
+                  <div className="mt-2 flex items-center gap-2 text-[#4F7A63] sm:mt-3">
                     <UserRound className="size-4" />
                     <span className="text-sm font-medium">
                       by {book.author}
                     </span>
                   </div>
 
-                  {/* Added By */}
-                  <div className="mt-4 rounded-md border border-[#D3DACD] bg-[#F6F8F3] p-4">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-[#5B6B61]">
-                      Added By
-                    </p>
+                  <div className="my-4 border-t border-[#DDE4D8] sm:my-6" />
 
-                    <p className="mt-2 font-serif text-base font-bold text-[#17302A]">
-                      {book.userName || "Unknown User"}
-                    </p>
-
-                    <p className="mt-1 break-all text-sm text-[#5B6B61]">
-                      {book.userEmail}
-                    </p>
-                  </div>
-
-                  <div className="my-6 border-t border-[#DDE4D8]" />
-
-                  <h2 className="mb-2 font-serif text-lg font-bold text-[#17302A]">
+                  <h2 className="mb-1.5 font-serif text-base font-bold text-[#17302A] sm:mb-2 sm:text-lg">
                     About this book
                   </h2>
 
-                  <p className="max-w-prose text-sm leading-7 text-[#5B6B61]">
+                  <p className="max-w-prose text-sm leading-6 text-[#5B6B61] sm:leading-7">
                     {book.description}
                   </p>
 
-                  <div className="my-6 border-t border-[#DDE4D8]" />
+                  <div className="my-4 border-t border-[#DDE4D8] sm:my-6" />
 
                   {/* Copies */}
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    <div className="flex items-center gap-3 rounded-md border border-[#D3DACD] bg-[#F6F8F3] p-4">
-                      <div className="flex size-10 shrink-0 items-center justify-center rounded-sm bg-[#17302A]">
-                        <LibraryBig className="size-5 text-[#D9A441]" />
+                  <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                    <div className="flex items-center gap-2 rounded-md border border-[#D3DACD] bg-[#F6F8F3] p-3 sm:gap-3 sm:p-4">
+                      <div className="flex size-9 shrink-0 items-center justify-center rounded-sm bg-[#17302A] sm:size-10">
+                        <LibraryBig className="size-4 text-[#D9A441] sm:size-5" />
                       </div>
 
                       <div>
                         <p className="text-xs text-[#5B6B61]">Total copies</p>
-                        <p className="font-serif text-xl font-bold text-[#17302A]">
+                        <p className="font-serif text-lg font-bold leading-tight text-[#17302A] sm:text-xl">
                           {book.totalCopies}
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-3 rounded-md border border-[#D3DACD] bg-[#F6F8F3] p-4">
-                      <div className="flex size-10 shrink-0 items-center justify-center rounded-sm bg-[#17302A]">
-                        <Tag className="size-5 text-[#D9A441]" />
+                    <div className="flex items-center gap-2 rounded-md border border-[#D3DACD] bg-[#F6F8F3] p-3 sm:gap-3 sm:p-4">
+                      <div className="flex size-9 shrink-0 items-center justify-center rounded-sm bg-[#17302A] sm:size-10">
+                        <Tag className="size-4 text-[#D9A441] sm:size-5" />
                       </div>
 
                       <div>
-                        <p className="text-xs text-[#5B6B61]">
-                          Available copies
-                        </p>
-                        <p className="font-serif text-xl font-bold text-[#17302A]">
+                        <p className="text-xs text-[#5B6B61]">Available</p>
+                        <p className="font-serif text-lg font-bold leading-tight text-[#17302A] sm:text-xl">
                           {book.availableCopies}
+                        </p>
+                      </div>
+                    </div>
+                    {/* Added By */}
+                    <div className="mt-4 flex items-center gap-3 rounded-md p-3 sm:mt-5">
+                      <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#17302A] font-serif text-base font-bold text-[#D9A441] sm:size-10">
+                        {(book.userName || "U").charAt(0).toUpperCase()}
+                      </div>
+
+                      <div className="min-w-0">
+                        <p className="text-xs text-[#5B6B61]">Added by</p>
+
+                        <p className="truncate font-serif text-base font-bold leading-tight text-[#17302A]">
+                          {book.userName || "Unknown User"}
+                        </p>
+
+                        <p
+                          className="truncate text-xs text-[#5B6B61]"
+                          title={book.userEmail}
+                        >
+                          {book.userEmail}
                         </p>
                       </div>
                     </div>
                   </div>
 
                   {/* Borrow action */}
-                  <div className="mt-7">
+                  <div className="mt-5 sm:mt-7">
                     {isSessionPending ? (
                       <button
                         disabled
