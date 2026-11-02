@@ -3,7 +3,11 @@ import { HeroSlider } from "@/components/home/HeroSlider";
 import { LatestBooks } from "@/components/home/LatestBooks";
 import { ShareBooksSection } from "@/components/home/ShareBooksSection";
 import { ReadingCommunitySection } from "@/components/home/ReadingCommunitySection";
+import type { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "BookNook | Home",
+};
 export default function Home() {
   return (
     <>

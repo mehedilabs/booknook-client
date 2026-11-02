@@ -52,7 +52,12 @@ function BookDetailsContent() {
   const [borrowedBookId, setBorrowedBookId] = useState<string | null>(null);
   const [isBorrowDialogOpen, setIsBorrowDialogOpen] = useState(false);
 
-  // Redirect users who are not logged in
+  useEffect(() => {
+    if (book?.title) {
+      document.title = `BookNook | ${book.title}`;
+    }
+  }, [book?.title]);
+
   useEffect(() => {
     if (!isSessionPending && !session) {
       router.replace(

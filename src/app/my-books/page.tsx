@@ -248,7 +248,6 @@ export default function MyBooksPage() {
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <div className="inline-flex items-center gap-2 rounded-full border border-[#D9A441]/40 bg-white/5 px-4 py-2 text-sm">
-                <LibraryBig className="size-4 text-[#D9A441]" />
                 {isLoading ? (
                   <span>Loading your books...</span>
                 ) : (
@@ -263,7 +262,7 @@ export default function MyBooksPage() {
 
               <Link
                 href="/books/add"
-                className="inline-flex items-center gap-1.5 rounded-md bg-[#D9A441] px-4 py-2 text-sm font-semibold text-[#17302A] transition-colors hover:bg-[#F3EFE3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F3EFE3]"
+                className="inline-flex items-center gap-1.5 rounded-full bg-[#D9A441] px-4 py-2 text-sm font-semibold text-[#17302A] transition-colors hover:bg-[#F3EFE3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F3EFE3]"
               >
                 <Plus size={16} />
                 Add New Book

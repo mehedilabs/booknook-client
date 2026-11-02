@@ -3,7 +3,7 @@ import { ArrowUpRight, BookOpen } from "lucide-react";
 
 export function ShareBooksSection() {
   return (
-    <section className="bg-[#EEF1EA] px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-24">
+    <section className="mx-2 rounded-md bg-[#EEF1EA] px-3 py-12 shadow-[0_3px_0_0_#D3DACD] sm:mx-0 sm:rounded-none sm:px-8 sm:py-16 sm:shadow-none lg:px-10 lg:py-24">
       <div className="mx-auto grid max-w-7xl items-center gap-7 lg:grid-cols-2 lg:gap-16">
         {/* Image */}
         <div
@@ -49,7 +49,7 @@ export function ShareBooksSection() {
             </Link>
           </div>
 
-          <div className="mt-7 border-l-2 border-[#D9A441] pl-4 sm:mt-9 sm:pl-5">
+          <div className="mt-7 sm:mt-9">
             <p className="font-serif text-base italic leading-7 text-[#5B6B61] sm:text-lg">
               &ldquo;The more that you read, the more things you will
               know.&rdquo;

@@ -174,7 +174,7 @@ export function Navbar() {
                   setIsProfileOpen(!isProfileOpen);
                   setIsMenuOpen(false);
                 }}
-                className={`flex items-center gap-1.5 rounded-full ${focusRing}`}
+                className={`flex items-center cursor-pointer gap-1.5 rounded-full ${focusRing}`}
                 aria-label="Open profile menu"
                 aria-haspopup="menu"
                 aria-expanded={isProfileOpen}

@@ -61,7 +61,7 @@ function LoginContent() {
         return;
       }
 
-      toast.success("Welcome back to BookNook!");
+      sessionStorage.setItem("booknook-login-success", "true");
 
       window.location.assign(redirectTo);
     } catch {

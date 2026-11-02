@@ -1,6 +1,8 @@
 "use client";
 
-import { Toaster } from "sonner";
+import { useEffect } from "react";
+import { toast, Toaster } from "sonner";
+
 import {
   CircleAlert,
   CircleCheck,
@@ -10,10 +12,18 @@ import {
 } from "lucide-react";
 
 export function AppToaster() {
+  useEffect(() => {
+    const loginSuccess = sessionStorage.getItem("booknook-login-success");
+
+    if (loginSuccess === "true") {
+      sessionStorage.removeItem("booknook-login-success");
+      toast.success("Welcome back to BookNook!");
+    }
+  }, []);
   return (
     <Toaster
-      position="bottom-right"
-      duration={3000}
+      position="top-center"
+      duration={2000}
       visibleToasts={2}
       offset={16}
       mobileOffset={{ bottom: 12, right: 12 }}

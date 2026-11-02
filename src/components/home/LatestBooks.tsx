@@ -61,12 +61,12 @@ export function LatestBooks() {
   }, []);
 
   return (
-    <section className="bg-[#EEF1EA] px-5 py-16 sm:px-8 lg:px-10 lg:py-20">
+    <section className="bg-[#EEF1EA] px-4 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20">
       <div className="mx-auto max-w-7xl">
         {/* Section Heading */}
-        <div className="mb-10 flex flex-col justify-between gap-5 border-b border-[#D3DACD] pb-8 sm:flex-row sm:items-end">
+        <div className="mb-8 flex flex-col gap-5 border-b border-[#D3DACD] pb-7 sm:mb-10 sm:flex-row sm:items-end sm:justify-between sm:gap-5 sm:pb-8">
           <div>
-            <p className="text-sm font-medium text-[#8A6414]">
+            <p className="text-xs font-semibold tracking-wide text-[#8A6414] sm:text-sm">
               Fresh from the shelves
             </p>
 
@@ -74,7 +74,7 @@ export function LatestBooks() {
               Latest Books
             </h2>
 
-            <p className="mt-3 max-w-xl text-sm leading-7 text-[#5B6B61] sm:text-base">
+            <p className="mt-2 max-w-xl text-sm leading-6 text-[#5B6B61] sm:mt-3 sm:text-base sm:leading-7">
               Explore the newest additions to our community library and find
               your next favorite read.
             </p>
@@ -82,18 +82,16 @@ export function LatestBooks() {
 
           <Link
             href="/books"
-            className="group inline-flex w-fit items-center gap-2 rounded-md text-sm font-semibold text-[#17302A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#17302A]"
+            className="group inline-flex w-full items-center justify-center gap-2 rounded-md border border-[#17302A] bg-[#17302A] px-5 py-3 text-sm font-semibold text-[#F3EFE3] transition-colors hover:border-[#D9A441] hover:bg-[#D9A441] hover:text-[#17302A] sm:w-fit sm:shrink-0 sm:bg-transparent sm:text-[#17302A]"
           >
-            <span className="border-b border-[#17302A]/30 transition-colors group-hover:border-[#D9A441]">
-              Explore All Books
-            </span>
+            Explore All Books
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
 
         {/* Loading State */}
         {isLoading && (
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
             {Array.from({ length: 6 }).map((_, index) => (
               <div key={index} className="flex flex-col">
                 <div className="motion-safe:animate-pulse overflow-hidden rounded-md border border-[#D3DACD] bg-white">
@@ -112,7 +110,7 @@ export function LatestBooks() {
 
         {/* Error State */}
         {!isLoading && error && (
-          <div className="flex items-center gap-4 rounded-md border border-[#E3C9C4] border-l-4 border-l-[#B5483B] bg-white px-6 py-6">
+          <div className="flex items-center gap-4 rounded-md border border-[#E3C9C4] border-l-4 border-l-[#B5483B] bg-white px-5 py-5 sm:px-6 sm:py-6">
             <BookOpen className="size-7 shrink-0 text-[#B5483B]" />
             <p className="text-sm font-medium text-[#5B6B61]">{error}</p>
           </div>
@@ -121,17 +119,17 @@ export function LatestBooks() {
         {/* Empty State */}
         {!isLoading && !error && books.length === 0 && (
           <div className="mx-auto max-w-xl overflow-hidden rounded-sm border border-[#D3DACD] bg-white shadow-[6px_6px_0_0_#D9A441]">
-            <div className="flex items-center gap-4 border-b-2 border-[#B5483B] px-6 py-6">
-              <div className="flex size-14 shrink-0 items-center justify-center rounded-sm bg-[#17302A]">
-                <LibraryBig className="size-7 text-[#D9A441]" />
+            <div className="flex items-center gap-4 border-b-2 border-[#B5483B] px-5 py-5 sm:px-6 sm:py-6">
+              <div className="flex size-12 shrink-0 items-center justify-center rounded-sm bg-[#17302A] sm:size-14">
+                <LibraryBig className="size-6 text-[#D9A441] sm:size-7" />
               </div>
 
-              <h3 className="font-serif text-2xl font-bold leading-tight text-[#17302A]">
+              <h3 className="font-serif text-xl font-bold leading-tight text-[#17302A] sm:text-2xl">
                 No Books Yet
               </h3>
             </div>
 
-            <div className="bg-[repeating-linear-gradient(to_bottom,transparent,transparent_31px,#DDE4D8_32px)] px-6 py-6">
+            <div className="bg-[repeating-linear-gradient(to_bottom,transparent,transparent_31px,#DDE4D8_32px)] px-5 py-5 sm:px-6 sm:py-6">
               <p className="text-sm leading-8 text-[#5B6B61]">
                 Our library is waiting for its first collection. New books will
                 appear here as soon as they are added.
@@ -142,7 +140,7 @@ export function LatestBooks() {
 
         {/* Books Grid */}
         {!isLoading && !error && books.length > 0 && (
-          <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-10 lg:grid-cols-3">
             {books.map((book) => (
               <div key={book._id} className="flex flex-col">
                 <BookCard book={book} />
