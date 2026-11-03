@@ -22,7 +22,7 @@ export function AppToaster() {
   }, []);
   return (
     <Toaster
-      position="top-center"
+      position="top-right"
       duration={2000}
       visibleToasts={2}
       offset={16}

@@ -4,7 +4,6 @@ import { useEffect, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import {
   CalendarDays,
-  Camera,
   Mail,
   Pencil,
   UserRound,
@@ -13,7 +12,6 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 
-import { Navbar } from "@/components/shared/Navbar";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 import {
@@ -43,7 +41,6 @@ export default function ProfilePage() {
   if (isPending || !user) {
     return (
       <>
-        <Navbar />
         <main className="flex min-h-[60vh] items-center justify-center bg-[#EEF1EA]">
           <div className="flex items-center gap-3 text-[#5B6B61]">
             <LoaderCircle className="size-5 animate-spin" />
@@ -103,8 +100,6 @@ export default function ProfilePage() {
 
   return (
     <>
-      <Navbar />
-
       <main className="min-h-[75vh] bg-[#EEF1EA] px-4 py-10 sm:px-6 sm:py-14">
         <div className="mx-auto max-w-2xl">
           {/* Heading */}

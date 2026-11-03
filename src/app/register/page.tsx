@@ -10,7 +10,6 @@ import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Navbar } from "@/components/shared/Navbar";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -104,8 +103,6 @@ export default function RegisterPage() {
 
   return (
     <>
-      <Navbar />
-
       <main className="flex min-h-screen items-center justify-center bg-[#EEF1EA] px-4 py-6">
         <div className="w-full max-w-sm overflow-hidden rounded-md border border-[#D3DACD] bg-white">
           <div className="h-1 bg-[#D9A441]" />

@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 
-import { Navbar } from "@/components/shared/Navbar";
 import { authClient } from "@/lib/auth-client";
 
 interface Book {
@@ -243,7 +242,6 @@ function BookDetailsContent() {
   if (isSessionPending || !session) {
     return (
       <>
-        <Navbar />
         <main className="flex min-h-screen items-center justify-center bg-[#EEF1EA] px-4">
           <p className="text-sm text-[#5B6B61]">Checking your account...</p>
         </main>
@@ -253,8 +251,6 @@ function BookDetailsContent() {
 
   return (
     <>
-      <Navbar />
-
       <main className="min-h-screen bg-[#EEF1EA] px-4 py-5 sm:px-8 sm:py-12 lg:px-10">
         <div className="mx-auto max-w-5xl">
           <Link

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, ImagePlus, X, Upload, BookOpen } from "lucide-react";
 import { toast } from "sonner";
-import { Navbar } from "@/components/shared/Navbar";
+
 import { authClient } from "@/lib/auth-client";
 
 const categories = ["Fiction", "Science", "History", "Kids", "Others"];
@@ -121,12 +121,54 @@ export default function AddBookPage() {
   if (isPending || !session) {
     return (
       <>
-        <Navbar />
+        <main className="min-h-screen bg-[#EEF1EA] px-4 py-7 sm:px-6 sm:py-9">
+          <div className="mx-auto max-w-4xl animate-pulse">
+            {/* Page heading skeleton */}
+            <div className="mb-5 h-4 w-28 rounded bg-[#D3DACD]" />
 
-        <main className="flex min-h-screen items-center justify-center bg-[#EDE6D3]">
-          <p className="text-sm font-medium text-[#4F7A63]">
-            Checking your session...
-          </p>
+            <div className="mb-6 space-y-2">
+              <div className="h-7 w-48 rounded bg-[#D3DACD]" />
+              <div className="h-4 w-64 max-w-full rounded bg-[#DDE4D8]" />
+            </div>
+
+            {/* Form skeleton */}
+            <div className="grid gap-6 rounded-xl border border-[#D3DACD] bg-white p-4 shadow-md sm:p-6 md:grid-cols-[1fr_250px] md:gap-7">
+              <section className="space-y-5">
+                <div className="mb-5 flex items-center gap-2 border-b border-[#D3DACD] pb-3">
+                  <div className="size-5 rounded bg-[#DDE4D8]" />
+                  <div className="h-4 w-36 rounded bg-[#D3DACD]" />
+                </div>
+
+                {[1, 2, 3, 4, 5].map((item) => (
+                  <div key={item} className="space-y-2">
+                    <div className="h-3 w-24 rounded bg-[#D3DACD]" />
+                    <div className="h-10 w-full rounded-lg bg-[#EEF1EA] shadow-inner" />
+                  </div>
+                ))}
+              </section>
+
+              {/* Cover upload skeleton */}
+              <aside>
+                <div className="mb-5 space-y-2 border-b border-[#D3DACD] pb-3">
+                  <div className="h-4 w-24 rounded bg-[#D3DACD]" />
+                  <div className="h-3 w-40 rounded bg-[#DDE4D8]" />
+                </div>
+
+                <div className="flex min-h-[235px] flex-col items-center justify-center rounded-lg border border-dashed border-[#D3DACD] bg-[#E4EBDF] shadow-inner">
+                  <div className="mb-3 size-12 rounded-full bg-[#D3DACD]" />
+                  <div className="h-3 w-28 rounded bg-[#D3DACD]" />
+                  <div className="mt-2 h-3 w-20 rounded bg-[#DDE4D8]" />
+                  <div className="mt-5 h-9 w-28 rounded-lg bg-[#D3DACD]" />
+                </div>
+              </aside>
+            </div>
+
+            {/* Action buttons skeleton */}
+            <div className="mt-5 flex justify-end gap-2">
+              <div className="h-10 w-24 rounded-lg bg-[#D3DACD]" />
+              <div className="h-10 w-32 rounded-lg bg-[#B9C9B9]" />
+            </div>
+          </div>
         </main>
       </>
     );
@@ -139,8 +181,6 @@ export default function AddBookPage() {
 
   return (
     <>
-      <Navbar />
-
       <main className="min-h-screen bg-[#EEF1EA] px-4 py-7 sm:px-6 sm:py-9">
         <div className="mx-auto max-w-4xl">
           <Link

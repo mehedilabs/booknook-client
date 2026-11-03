@@ -15,7 +15,6 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 
-import { Navbar } from "@/components/shared/Navbar";
 import { EditBookDialog } from "@/components/books/EditBookDialog";
 import {
   Dialog,
@@ -219,21 +218,41 @@ export default function MyBooksPage() {
 
   if (isPending || !session) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#EEF1EA]">
-        <div className="text-center">
-          <BookOpen className="mx-auto size-10 animate-pulse text-[#17302A]" />
-          <p className="mt-4 text-sm text-[#5B6B61]">
-            Checking your session...
-          </p>
-        </div>
-      </div>
+      <>
+        <main className="min-h-screen bg-[#EEF1EA]">
+          <header className="bg-[#17302A] text-[#F3EFE3]">
+            <div className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-12 lg:px-10">
+              <div className="h-10 w-48 animate-pulse rounded bg-white/15 sm:h-12 sm:w-56" />
+              <div className="mt-4 h-4 w-72 max-w-full animate-pulse rounded bg-white/10" />
+              <div className="mt-6 h-9 w-40 animate-pulse rounded-full bg-white/10" />
+            </div>
+            <div className="h-0.5 bg-[#D9A441]" />
+          </header>
+
+          <div className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:px-10">
+            <div className="overflow-hidden rounded-md border border-[#D3DACD] bg-white shadow-sm">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="flex animate-pulse items-center gap-4 border-b border-[#DDE4D8] px-6 py-5 last:border-b-0"
+                >
+                  <div className="h-20 w-14 shrink-0 rounded-sm bg-[#DDE4D8]" />
+                  <div className="flex-1 space-y-3">
+                    <div className="h-4 w-1/3 rounded bg-[#DDE4D8]" />
+                    <div className="h-3 w-1/5 rounded bg-[#E8EDE4]" />
+                  </div>
+                  <div className="hidden h-9 w-20 rounded bg-[#E8EDE4] sm:block" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </main>
+      </>
     );
   }
 
   return (
     <>
-      <Navbar />
-
       <main className="min-h-screen bg-[#EEF1EA]">
         {/* Header */}
         <header className="relative overflow-hidden bg-[#17302A] text-[#F3EFE3]">

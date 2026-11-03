@@ -6,13 +6,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { ArrowRight, BookOpen, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
+import LoginLoading from "./loading";
 
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Navbar } from "@/components/shared/Navbar";
 
 function LoginContent() {
   const router = useRouter();
@@ -92,8 +92,6 @@ function LoginContent() {
 
   return (
     <>
-      <Navbar />
-
       <main className="flex min-h-screen items-center justify-center bg-[#EEF1EA] px-4 py-6">
         <div className="w-full max-w-sm overflow-hidden rounded-md border border-[#D3DACD] bg-white">
           <div className="h-1 bg-[#D9A441]" />
@@ -274,7 +272,7 @@ function LoginContent() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<LoginLoading />}>
       <LoginContent />
     </Suspense>
   );

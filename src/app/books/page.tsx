@@ -12,7 +12,6 @@ import {
   X,
 } from "lucide-react";
 
-import { Navbar } from "@/components/shared/Navbar";
 import { BookCard } from "@/components/books/BookCard";
 
 interface Book {
@@ -193,11 +192,9 @@ export default function AllBooksPage() {
 
   return (
     <>
-      <Navbar />
-
       <main className="min-h-screen bg-[#EEF1EA]">
         {/* Page Header */}
-        <section className="border-b-4 border-[#D9A441] bg-[#17302A] px-5 py-6 sm:px-8 sm:py-8 lg:px-10">
+        <section className="border-b-3 border-[#D9A441] bg-[#17302A] px-5 py-6 sm:px-8 sm:py-8 lg:px-10">
           <div className="mx-auto max-w-7xl">
             <div className="mb-2 flex items-center gap-2">
               <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#D9A441] sm:text-xs">

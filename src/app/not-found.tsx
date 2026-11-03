@@ -1,13 +1,9 @@
 import Link from "next/link";
 import { ArrowLeft, BookOpen, LibraryBig, Search } from "lucide-react";
 
-import { Navbar } from "@/components/shared/Navbar";
-
 export default function NotFound() {
   return (
     <>
-      <Navbar />
-
       <main className="relative flex min-h-[75vh] items-center justify-center overflow-hidden bg-[#EEF1EA] px-5 py-16">
         {/* Decorative background */}
         <div className="pointer-events-none absolute -left-24 top-10 size-64 rounded-full bg-[#D9A441]/10 blur-3xl" />

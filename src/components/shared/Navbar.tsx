@@ -9,7 +9,6 @@ import {
   X,
   Home,
   LibraryBig,
-  ChevronRight,
   UserRound,
   LogOut,
   BookPlus,
@@ -34,7 +33,6 @@ const privateLinks = [
 
 const allHrefs = [...navLinks, ...privateLinks].map((link) => link.href);
 
-// Style only: decides which link is marked for the current page
 const isActiveLink = (pathname: string, href: string) => {
   const matches = (target: string) =>
     target === "/"
@@ -43,7 +41,6 @@ const isActiveLink = (pathname: string, href: string) => {
 
   if (!matches(href)) return false;
 
-  // "/books" must not stay marked on "/books/add"
   return !allHrefs.some(
     (other) => other !== href && other.length > href.length && matches(other),
   );
@@ -141,8 +138,8 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden items-center lg:flex">
-          {visibleLinks.map((link) => {
+        <div className="hidden items-center lg:ml-6 lg:mr-auto lg:flex xl:ml-24">
+          {navLinks.map((link) => {
             const active = isActiveLink(pathname, link.href);
 
             return (
@@ -162,9 +159,46 @@ export function Navbar() {
               </Link>
             );
           })}
+
+          {isPending ? (
+            <div className="flex items-center" aria-label="Loading navigation">
+              {[20, 20, 24].map((width, index) => (
+                <div key={index} className="flex h-[68px] items-center px-3.5">
+                  <div
+                    className="h-3.5 animate-pulse rounded-full bg-[#DDE4D8]"
+                    style={{ width: `${width * 4}px` }}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            user &&
+            privateLinks.map((link) => {
+              const active = isActiveLink(pathname, link.href);
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  aria-current={active ? "page" : undefined}
+                  className={desktopLinkClass(active)}
+                >
+                  {link.label}
+                  <span
+                    aria-hidden="true"
+                    className={`absolute inset-x-3.5 -bottom-px h-0.5 origin-center bg-[#D9A441] transition-transform duration-300 ${
+                      active
+                        ? "scale-x-100"
+                        : "scale-x-0 group-hover:scale-x-100"
+                    }`}
+                  />
+                </Link>
+              );
+            })
+          )}
         </div>
 
-        {/* Right side: profile (all sizes), login/register (desktop), menu toggle (mobile) */}
+        {/* Right Side */}
         <div className="flex min-w-0 items-center gap-1.5 sm:gap-3">
           {isPending ? null : user ? (
             <div className="relative min-w-0" ref={profileRef}>
@@ -174,7 +208,7 @@ export function Navbar() {
                   setIsProfileOpen(!isProfileOpen);
                   setIsMenuOpen(false);
                 }}
-                className={`flex items-center cursor-pointer gap-1.5 rounded-full ${focusRing}`}
+                className={`flex cursor-pointer items-center gap-2 rounded-full ${focusRing}`}
                 aria-label="Open profile menu"
                 aria-haspopup="menu"
                 aria-expanded={isProfileOpen}
@@ -184,16 +218,26 @@ export function Navbar() {
                     src={user.image}
                     alt={user.name || "Profile"}
                     referrerPolicy="no-referrer"
-                    className="size-8 shrink-0 rounded-full object-cover ring-2 ring-[#D9A441] ring-offset-1 ring-offset-[#F6F8F3] sm:size-9 sm:ring-offset-2"
+                    className="size-8 shrink-0 rounded-full object-cover ring-2 ring-[#D9A441] ring-offset-1 ring-offset-[#F6F8F3]"
                   />
                 ) : (
-                  <span className="inline-flex h-8 min-w-0 max-w-[5.5rem] items-center rounded-full bg-[#17302A] px-3 text-xs font-semibold text-[#F3EFE3] transition-colors hover:bg-[#244438] sm:h-9 sm:max-w-[9rem] sm:px-3.5 sm:text-sm">
-                    <span className="truncate">{firstName}</span>
-                  </span>
+                  <>
+                    <span className="inline-flex h-8 min-w-0 max-w-[5.5rem] items-center rounded-full bg-[#17302A] px-3 text-xs font-semibold text-[#F3EFE3] transition-colors hover:bg-[#244438] sm:hidden">
+                      <span className="truncate">{firstName}</span>
+                    </span>
+
+                    <span className="hidden size-8 shrink-0 items-center justify-center rounded-full bg-[#17302A] font-serif text-base font-bold text-[#D9A441] sm:flex">
+                      {avatarLetter}
+                    </span>
+                  </>
                 )}
+
+                <span className="hidden max-w-28 truncate text-md font-semibold text-[#17302A] sm:inline">
+                  {firstName}
+                </span>
               </button>
 
-              {/* Profile dropdown */}
+              {/* Profile Dropdown */}
               {isProfileOpen && (
                 <div
                   role="menu"
@@ -216,7 +260,6 @@ export function Navbar() {
                     )}
 
                     <div className="min-w-0 flex-1">
-                      {/* Mobile: first name only. Desktop: full name and email. */}
                       <p className="truncate font-serif text-base font-bold text-[#17302A]">
                         <span className="lg:hidden">{firstName}</span>
                         <span className="hidden lg:inline">
@@ -255,25 +298,35 @@ export function Navbar() {
               )}
             </div>
           ) : (
-            <div className="hidden items-center gap-2 lg:flex">
+            <>
+              {/* Mobile and Tablet Login */}
               <Link
                 href="/login"
-                className={`inline-flex h-9 items-center justify-center rounded-md px-4 text-sm font-medium text-[#3F5249] transition-colors hover:bg-[#E4EBDF] hover:text-[#17302A] ${focusRing}`}
+                className={`inline-flex h-8 items-center rounded-full bg-[#17302A] px-3.5 text-xs font-semibold text-[#F3EFE3] transition-colors hover:bg-[#244438] sm:h-9 sm:px-4 sm:text-sm lg:hidden ${focusRing}`}
               >
                 Login
               </Link>
 
-              <Link
-                href="/register"
-                className={`inline-flex h-9 items-center justify-center gap-1 rounded-md bg-[#17302A] px-4 text-sm font-medium text-[#F3EFE3] transition-colors hover:bg-[#244438] ${focusRing}`}
-              >
-                Register
-                <ChevronRight className="size-4" />
-              </Link>
-            </div>
+              {/* Desktop Login and Register */}
+              <div className="hidden items-center gap-2 lg:flex">
+                <Link
+                  href="/login"
+                  className={`inline-flex h-9 items-center justify-center rounded-md bg-[#cbd2c6] px-4 text-sm font-medium text-[#3F5249] transition-colors hover:bg-[#D9A441] hover:text-[#17302A] ${focusRing}`}
+                >
+                  Login
+                </Link>
+
+                <Link
+                  href="/register"
+                  className={`inline-flex h-9 items-center justify-center gap-1 rounded-md bg-[#17302A] px-4 text-sm font-medium text-[#F3EFE3] transition-colors hover:bg-[#244438] ${focusRing}`}
+                >
+                  Register
+                </Link>
+              </div>
+            </>
           )}
 
-          {/* Mobile menu toggle */}
+          {/* Mobile Menu Toggle */}
           <Button
             variant="ghost"
             size="icon"
@@ -286,9 +339,9 @@ export function Navbar() {
             aria-expanded={isMenuOpen}
           >
             {isMenuOpen ? (
-              <X className="size-6" />
+              <X className="size-8" />
             ) : (
-              <Menu className="size-6" />
+              <Menu className="size-8" />
             )}
           </Button>
         </div>
@@ -317,6 +370,23 @@ export function Navbar() {
                 </Link>
               );
             })}
+
+            {isPending && (
+              <div className="space-y-1 py-1" aria-label="Loading navigation">
+                {[24, 20, 24].map((width, index) => (
+                  <div
+                    key={index}
+                    className="flex h-[46px] items-center gap-3 rounded-md px-3"
+                  >
+                    <div className="size-2.5 shrink-0 animate-pulse rounded-full bg-[#DDE4D8]" />
+                    <div
+                      className="h-2 animate-pulse rounded-full bg-[#DDE4D8]"
+                      style={{ width: `${width * 4}px` }}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
 
             {!isPending && !user && (
               <>
