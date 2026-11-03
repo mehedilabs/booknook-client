@@ -45,7 +45,7 @@ function FooterSection({
 
       <div
         id={panelId}
-        className={`${open ? "block" : "hidden"} pb-6 text-center md:mt-5 md:block md:pb-0 md:text-left`}
+        className={`${open ? "block" : "hidden"} pb-6 text-center md:mt-3 md:block md:pb-0 md:text-left`}
       >
         {children}
       </div>
@@ -55,8 +55,8 @@ function FooterSection({
 
 export function Footer() {
   return (
-    <footer className="border-t-2 border-[#D9A441] bg-[#17302A] text-[#F3EFE3]">
-      <div className="mx-auto grid max-w-7xl gap-0 px-5 pb-0 pt-10 sm:px-8 md:grid-cols-2 md:gap-10 md:pb-10 lg:grid-cols-[1.5fr_1fr_1fr] lg:gap-12 lg:px-10 lg:py-14">
+    <footer className="border-t-2 border-[#D9A441] bg-[#222725] text-[#F3EFE3]">
+      <div className="mx-auto grid max-w-7xl gap-0 px-5 pb-0 pt-10 sm:px-8 md:grid-cols-2 md:gap-6 md:pb-6 md:pt-8 lg:grid-cols-[1.5fr_1fr_1fr] lg:gap-8 lg:px-10 lg:py-8">
         {/* Brand */}
         <div className="pb-8 text-center md:col-span-2 md:pb-0 md:text-left lg:col-span-1">
           <Link href="/" className="inline-flex items-center gap-3">
@@ -106,8 +106,7 @@ export function Footer() {
             <Mail className="size-4" />
             Contact Us
           </a>
-
-          <div className="mt-6 flex items-center justify-center gap-3 md:justify-start">
+          <div className="mt-4 flex items-center justify-center gap-3 md:justify-start">
             <a
               href="https://github.com/mehedilabs"
               target="_blank"
